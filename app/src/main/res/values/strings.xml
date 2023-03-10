@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Event Planner</string>
+    <string name="search_hint">Concerts. . .</string>
+    <string name="search">Search Here</string>
+    <string name="recommendations_heading">Find Events</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="events">Events</string>
+    <string name="recommended_events">Recommended</string>
+    <string name="event_categories">Categories</string>
+    <string name="popular_events">Popular</string>
+    <string name="upcoming_events">Upcoming</string>
+    <string name="navigation_drawer_open">open test</string>
+    <string name="navigation_drawer_close">test close</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>

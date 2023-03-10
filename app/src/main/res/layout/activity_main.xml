@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- Scroll view nesting all everthing exepct the drawer -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--Eventually make a way for the toolbar and searchbar to hide when scrolling-->
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:title="@string/app_name" />
+
+        <!-- Search bar -->
+        <androidx.appcompat.widget.ActionMenuView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:iconifiedByDefault="false"
+                app:queryHint="@string/search_hint" />
+        </androidx.appcompat.widget.ActionMenuView>
+
+        <!--==================== Event categories =====================-->
+        <TextView
+            android:id="@+id/tv_event_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/event_categories"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_event_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_event_category"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tv_event_categories" />
+
+
+        <!--=================== Popular events =============================-->
+        <TextView
+            android:id="@+id/tv_popular_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/popular_events"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_popular_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tv_popular_events" />
+
+        <!--=============== Recommended events =======================-->
+        <TextView
+            android:id="@+id/tv_recommended_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/recommended_events"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recommended_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tv_recommended_events" />
+
+        <!--=========== Upcoming events ===================-->
+        <TextView
+            android:id="@+id/tv_upcoming_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/upcoming_events"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_upcoming_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tv_upcoming_events" />
+
+    </LinearLayout>
+    </ScrollView>
+
+    <!-- Navigation drawer. I dont know how this works -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_drawer_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        android:scrollbars="vertical"
+        android:padding="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
