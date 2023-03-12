@@ -14,8 +14,10 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.carson.eventplanner.R;
+import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.objects.EventCategory;
 import com.carson.eventplanner.presentation.adapters.DrawerMenuAdapter;
+import com.carson.eventplanner.presentation.adapters.EventAdapter;
 import com.carson.eventplanner.presentation.adapters.EventCategoryAdapter;
 
 import java.util.ArrayList;
@@ -71,31 +73,31 @@ public class MainActivity extends AppCompatActivity {
         // Popular events
         rvPopular = findViewById(R.id.rv_popular_events);
         //rvPopular.setLayoutManager(new LinearLayoutManager(this));
-        List<EventCategory> popEventList = new ArrayList<>();
-        popEventList.add(new EventCategory("golf with friends"));
-        popEventList.add(new EventCategory("music in the park"));
-        popEventList.add(new EventCategory("game night"));
-        EventCategoryAdapter popularEventsAdapter = new EventCategoryAdapter(popEventList);
+        List<Event> popEventList = new ArrayList<>();
+        popEventList.add(new Event("golf with friends"));
+        popEventList.add(new Event("music in the park"));
+        popEventList.add(new Event("game night"));
+        EventAdapter popularEventsAdapter = new EventAdapter(popEventList);
         rvPopular.setAdapter(popularEventsAdapter);
 
         // Recommended Events
         rvRecommended = findViewById(R.id.rv_recommended_events);
         //rvRecommended.setLayoutManager(new LinearLayoutManager(this));
-        List<EventCategory> recommendedList = new ArrayList<>();
-        recommendedList.add(new EventCategory("shuffle board"));
-        recommendedList.add(new EventCategory("bird watching"));
-        recommendedList.add(new EventCategory("Complaining"));
-        EventCategoryAdapter recommendedEventsAdapter = new EventCategoryAdapter(recommendedList);
+        List<Event> recommendedList = new ArrayList<>();
+        recommendedList.add(new Event("shuffle board"));
+        recommendedList.add(new Event("bird watching"));
+        recommendedList.add(new Event("Complaining"));
+        EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList);
         rvRecommended.setAdapter(recommendedEventsAdapter);
 
         // Upcoming Events
         rvUpcoming = findViewById(R.id.rv_upcoming_events);
         //rvUpcoming.setLayoutManager(new LinearLayoutManager(this));
-        List<EventCategory> upcomingList = new ArrayList<>();
-        upcomingList.add(new EventCategory("golf with friends"));
-        upcomingList.add(new EventCategory("music in the park"));
-        upcomingList.add(new EventCategory("game night"));
-        EventCategoryAdapter upcomingEventsAdapter = new EventCategoryAdapter(upcomingList);
+        List<Event> upcomingList = new ArrayList<>();
+        upcomingList.add(new Event("golf with friends"));
+        upcomingList.add(new Event("music in the park"));
+        upcomingList.add(new Event("game night"));
+        EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList);
         rvUpcoming.setAdapter(upcomingEventsAdapter);
     }
 
