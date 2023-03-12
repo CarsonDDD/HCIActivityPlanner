@@ -49,14 +49,12 @@ public class EventCategoryAdapter extends RecyclerView.Adapter<EventCategoryAdap
 
     public static class EventCategoryViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView eventCategoryTitleTextView;
-        private final TextView eventCategoryDescriptionTextView;
+        private final TextView title;
         //private final ImageView eventCategoryImageView;
 
         public EventCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            eventCategoryTitleTextView = itemView.findViewById(R.id.tv_event_category_title);
-            eventCategoryDescriptionTextView = itemView.findViewById(R.id.tv_event_category_description);
+            title = itemView.findViewById(R.id.tv_event_category);
             //eventCategoryImageView = itemView.findViewById(R.id.iv_event_category);
         }
 
@@ -71,8 +69,7 @@ public class EventCategoryAdapter extends RecyclerView.Adapter<EventCategoryAdap
                 }
             });*/
 
-            eventCategoryTitleTextView.setText(eventCategory.getTitle());
-            eventCategoryDescriptionTextView.setText(eventCategory.getDescription());
+            title.setText(eventCategory.getTitle());
             //eventCategoryImageView.setImageResource(eventCategory.getImageResource());
             /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
