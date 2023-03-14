@@ -7,111 +7,43 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <!-- Scroll view nesting all everthing exepct the drawer -->
-    <ScrollView
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:title="@string/app_name"
+        app:contentInsetStart="0dp">
+
+      <!-- Search bar -->
+      <androidx.appcompat.widget.SearchView
+          android:id="@+id/search_view"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_margin="8dp"
+          android:layout_marginEnd="8dp"
+          android:paddingStart="-20dp"
+          app:iconifiedByDefault="false"
+          app:queryHint="@string/search_hint" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_discovery"
+        android:id="@+id/fragment_container"/>
+  </LinearLayout>
 
-        <!--Eventually make a way for the toolbar and searchbar to hide when scrolling-->
-        <!-- Toolbar -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/primary"
-            app:title="@string/app_name">
-
-            <!-- Search bar -->
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                android:paddingStart="-20dp"
-                app:iconifiedByDefault="false"
-                app:queryHint="@string/search_hint" />
-
-
-        </androidx.appcompat.widget.Toolbar>
-
-
-        <!--==================== Event categories =====================-->
-        <TextView
-            android:id="@+id/tv_event_categories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/event_categories"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_event_categories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_event_category"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_event_categories" />
-
-
-        <!--=================== Popular events =============================-->
-        <TextView
-            android:id="@+id/tv_popular_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/popular_events"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_popular_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_event"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_popular_events" />
-
-        <!--=============== Recommended events =======================-->
-        <TextView
-            android:id="@+id/tv_recommended_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/recommended_events"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recommended_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_event"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_recommended_events" />
-
-        <!--=========== Upcoming events ===================-->
-        <TextView
-            android:id="@+id/tv_upcoming_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/upcoming_events"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_upcoming_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_event"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_upcoming_events" />
-
-    </LinearLayout>
-    </ScrollView>
 
     <!-- Navigation drawer. I dont know how this works -->
     <androidx.recyclerview.widget.RecyclerView

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DiscoveryFragment"
+    android:id="@+id/fragment_discovery">
+
+
+    <!-- Scroll view nesting all everthing exepct the drawer -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--==================== Event categories =====================-->
+            <TextView
+                android:id="@+id/tv_event_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/event_categories"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_event_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_event_category"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_event_categories" />
+
+
+            <!--=================== Popular events =============================-->
+            <TextView
+                android:id="@+id/tv_popular_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/popular_events"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_event"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_events" />
+
+            <!--=============== Recommended events =======================-->
+            <TextView
+                android:id="@+id/tv_recommended_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/recommended_events"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommended_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_event"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_recommended_events" />
+
+            <!--=========== Upcoming events ===================-->
+            <TextView
+                android:id="@+id/tv_upcoming_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/upcoming_events"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_upcoming_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_event"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_upcoming_events" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
