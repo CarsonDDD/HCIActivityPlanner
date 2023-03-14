@@ -7,15 +7,39 @@
     tools:context=".presentation.fragments.DiscoveryFragment"
     android:id="@+id/fragment_discovery">
 
-
     <!-- Scroll view nesting all everthing exepct the drawer -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+            <!-- Toolbar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/primary"
+                app:title="@string/app_name"
+                app:contentInsetStart="0dp">
+
+                <!-- Search bar -->
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:paddingStart="-20dp"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="@string/search_hint" />
+
+
+            </androidx.appcompat.widget.Toolbar>
 
             <!--==================== Event categories =====================-->
             <TextView

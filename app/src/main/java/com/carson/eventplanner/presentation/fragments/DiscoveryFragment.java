@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.objects.EventCategory;
+import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.DrawerMenuAdapter;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
 import com.carson.eventplanner.presentation.adapters.EventCategoryAdapter;
@@ -28,8 +29,14 @@ import java.util.List;
 
 public class DiscoveryFragment extends Fragment {
 
+    private MainActivity parent;
     // event views
     private RecyclerView rvCategories, rvPopular, rvRecommended, rvUpcoming;
+
+    public DiscoveryFragment(MainActivity parent){
+        this.parent = parent;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,8 @@ public class DiscoveryFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+
+        parent.setToolbar(view.findViewById(R.id.toolbar));
 
         // Set up the event categories
         rvCategories = view.findViewById(R.id.rv_event_categories);

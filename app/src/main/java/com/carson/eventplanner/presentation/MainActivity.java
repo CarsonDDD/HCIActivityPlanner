@@ -19,7 +19,7 @@ import com.carson.eventplanner.R;
 import com.carson.eventplanner.presentation.adapters.DrawerMenuAdapter;
 import com.carson.eventplanner.presentation.fragments.FriendsFragment;
 import com.carson.eventplanner.presentation.fragments.InvitesFragment;
-import com.carson.eventplanner.presentation.fragments.ProfileFragment;
+import com.carson.eventplanner.presentation.fragments.EventListFragment;
 import com.carson.eventplanner.presentation.fragments.RecommendationFragment;
 
 import java.util.ArrayList;
@@ -27,10 +27,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private Toolbar toolbar;
 
     private RecyclerView rvDrawerMenu;
 
@@ -41,19 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set current fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, new DiscoveryFragment());
+        fragmentTransaction.replace(R.id.fragment_container, new DiscoveryFragment(this));
         fragmentTransaction.commit();
 
-
-        // Set up the toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Add menu to toolbar
-        drawerLayout = findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
 
         // set up Hamburger drawer. Icon changing should be done here too
         rvDrawerMenu = findViewById(R.id.rv_drawer_menu);
@@ -97,6 +85,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    // Used from other fragments to populate apps toolbar with its own
+    // while keeping the standard/cross fragment toolbar features (hamburger menu)
+    public void setToolbar(Toolbar toolbar) {
+        // Set toolbar
+        setSupportActionBar(toolbar);
+
+        // Add standard features
+        // Add menu to toolbar
+        drawerLayout = findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+    }
+
     private void switchFragment(Fragment newFragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, newFragment);
@@ -107,12 +110,17 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.close();
     }
 
+    // Panic function
+    // Yes this is mandatory, removing it will ensue in chaos
+    private MainActivity getThis(){ return this;}
+
+
     final private DrawerMenuAdapter.OnItemClickListener menuClick = new DrawerMenuAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(String id) {
             switch (id.toLowerCase()){
                 case "home":
-                    switchFragment(new DiscoveryFragment());
+                    switchFragment(new DiscoveryFragment(getThis()));
                     break;
                 case "invites":
                     switchFragment(new InvitesFragment());
@@ -121,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     switchFragment(new FriendsFragment());
                     break;
                 case "your events":
-                    switchFragment(new ProfileFragment());
+                    switchFragment(new EventListFragment(getThis()));
                     break;
                 case "bookmarks":
                     switchFragment(new BookmarksFragment());
@@ -133,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                     switchFragment(new CalendarFragment());
                     break;
             }
-
 
         }
     };
