@@ -50,12 +50,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public static class EventViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
         private final TextView date;
+        private final TextView time;
         //private final ImageView image;
 
         public EventViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_event_title);
             date = itemView.findViewById(R.id.tv_event_date);
+            time = itemView.findViewById(R.id.tv_event_time);
 
             //image = itemView.findViewById(R.id.iv_event);
         }
@@ -63,7 +65,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         public void bind(Event event){
             title.setText(event.getTitle());
             date.setText(event.getDate());
-
+            time.setText(event.getTime());
             /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

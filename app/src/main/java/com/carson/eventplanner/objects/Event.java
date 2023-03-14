@@ -13,7 +13,11 @@ public class Event {
     }
 
     public String getDate() {
-        return "April 1, 2020 @ 6pm";
+        return "April 1, 2020";
+    }
+
+    public String getTime(){
+        return "5pm";
     }
 
     /*public int getImageResource() {
