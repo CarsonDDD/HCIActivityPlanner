@@ -19,7 +19,7 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Dr
     private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(String id);
     }
 
     public DrawerMenuAdapter(List<String> drawerMenuList, OnItemClickListener listener) {
@@ -58,7 +58,7 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Dr
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(getAdapterPosition());
+                    listener.onItemClick(drawerMenu);
                 }
             });
         }

@@ -1,4 +1,4 @@
-package com.carson.eventplanner;
+package com.carson.eventplanner.presentation.fragments;
 
 import android.os.Bundle;
 
@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.objects.EventCategory;
 import com.carson.eventplanner.presentation.adapters.DrawerMenuAdapter;

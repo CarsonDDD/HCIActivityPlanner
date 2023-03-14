@@ -4,23 +4,23 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.SearchView;
 
-import com.carson.eventplanner.DiscoveryFragment;
+import com.carson.eventplanner.presentation.fragments.BookmarksFragment;
+import com.carson.eventplanner.presentation.fragments.CalendarFragment;
+import com.carson.eventplanner.presentation.fragments.DiscoveryFragment;
 import com.carson.eventplanner.R;
-import com.carson.eventplanner.objects.Event;
-import com.carson.eventplanner.objects.EventCategory;
 import com.carson.eventplanner.presentation.adapters.DrawerMenuAdapter;
-import com.carson.eventplanner.presentation.adapters.EventAdapter;
-import com.carson.eventplanner.presentation.adapters.EventCategoryAdapter;
+import com.carson.eventplanner.presentation.fragments.FriendsFragment;
+import com.carson.eventplanner.presentation.fragments.InvitesFragment;
+import com.carson.eventplanner.presentation.fragments.ProfileFragment;
+import com.carson.eventplanner.presentation.fragments.RecommendationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Set current fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new DiscoveryFragment());
         fragmentTransaction.commit();
@@ -58,9 +59,13 @@ public class MainActivity extends AppCompatActivity {
         rvDrawerMenu = findViewById(R.id.rv_drawer_menu);
         rvDrawerMenu.setLayoutManager(new LinearLayoutManager(this));
         List<String> drawerItems = new ArrayList<>();
-        drawerItems.add("Settings");
-        drawerItems.add("Help");
-        drawerItems.add("Feedback");
+        drawerItems.add("Home");
+        drawerItems.add("Invites");
+        drawerItems.add("Friends");
+        drawerItems.add("Your Events");
+        drawerItems.add("Bookmarks");
+        drawerItems.add("Recommendations");
+        drawerItems.add("Calendar");
         DrawerMenuAdapter drawerMenuAdapter = new DrawerMenuAdapter(drawerItems, menuClick);
         rvDrawerMenu.setAdapter(drawerMenuAdapter);
 
@@ -87,12 +92,48 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });*/
+
+
         return true;
+    }
+
+    private void switchFragment(Fragment newFragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, newFragment);
+        fragmentTransaction.commit();
+
+        // Highlight current drawer item
+
+        drawerLayout.close();
     }
 
     final private DrawerMenuAdapter.OnItemClickListener menuClick = new DrawerMenuAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(int position) {
+        public void onItemClick(String id) {
+            switch (id.toLowerCase()){
+                case "home":
+                    switchFragment(new DiscoveryFragment());
+                    break;
+                case "invites":
+                    switchFragment(new InvitesFragment());
+                    break;
+                case "friends":
+                    switchFragment(new FriendsFragment());
+                    break;
+                case "your events":
+                    switchFragment(new ProfileFragment());
+                    break;
+                case "bookmarks":
+                    switchFragment(new BookmarksFragment());
+                    break;
+                case "recommendations":
+                    switchFragment(new RecommendationFragment());
+                    break;
+                case "calendar":
+                    switchFragment(new CalendarFragment());
+                    break;
+            }
+
 
         }
     };
