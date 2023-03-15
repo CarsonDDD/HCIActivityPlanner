@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
             app:title="@string/your_events"
-            app:menu="@menu/menu_plus">
+            app:menu="@menu/menu_add_event">
             <!-- menu is added programically, shown here to visualize -->
         </androidx.appcompat.widget.Toolbar>
 
@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/v_titleline"
             tools:listitem="@layout/item_event_alt"
-            android:id="@+id/rv_createdevents"/>
+            android:id="@+id/rv_myevents"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:text="Attending Events:"
             android:textSize="22sp"
             android:id="@+id/tv_attevents"
-            android:layout_below="@id/rv_createdevents"/>
+            android:layout_below="@id/rv_myevents"/>
 
         <View
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/v_atttitleline"
             tools:listitem="@layout/item_event_alt"
-            android:id="@+id/rv_attevents"/>
+            android:id="@+id/rv_joinedevents"/>
 
     </RelativeLayout>
 </ScrollView>

@@ -71,7 +71,7 @@ public class DiscoveryFragment extends ACCIFragment {
         popEventList.add(new Event("golf with friends"));
         popEventList.add(new Event("music in the park"));
         popEventList.add(new Event("game night"));
-        EventAdapter popularEventsAdapter = new EventAdapter(popEventList);
+        EventAdapter popularEventsAdapter = new EventAdapter(popEventList, R.layout.item_event);
         rvPopular.setAdapter(popularEventsAdapter);
 
         // Recommended Events
@@ -81,7 +81,7 @@ public class DiscoveryFragment extends ACCIFragment {
         recommendedList.add(new Event("shuffle board"));
         recommendedList.add(new Event("bird watching"));
         recommendedList.add(new Event("Complaining"));
-        EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList);
+        EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList, R.layout.item_event);
         rvRecommended.setAdapter(recommendedEventsAdapter);
 
         // Upcoming Events
@@ -91,7 +91,7 @@ public class DiscoveryFragment extends ACCIFragment {
         upcomingList.add(new Event("golf with friends"));
         upcomingList.add(new Event("music in the park"));
         upcomingList.add(new Event("game night"));
-        EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList);
+        EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event);
         rvUpcoming.setAdapter(upcomingEventsAdapter);
 
     }

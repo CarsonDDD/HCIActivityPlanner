@@ -18,14 +18,16 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
     private final List<Event> eventList;
+    private final int layout;
     //private final OnItemClickListener listener;
 
     /*public interface OnItemClickListener {
         void onItemClick(Event eventCategory);
     }*/
 
-    public EventAdapter(List<Event> eventList/*, OnItemClickListener listener*/) {
+    public EventAdapter(List<Event> eventList, int layout/*, OnItemClickListener listener*/) {
         this.eventList = eventList;
+        this.layout = layout;
         //this.listener = listener;
     }
 
@@ -33,7 +35,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     @NonNull
     @Override
     public EventAdapter.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new EventAdapter.EventViewHolder(view);
     }
 
