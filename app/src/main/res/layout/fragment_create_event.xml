@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CreateEventFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:title="@string/create_event"
+            app:menu="@menu/menu_escape_create_event">
+            <!-- menu is added programically, shown here to visualize -->
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- single line entry-->
+        <LinearLayout
+            android:id="@+id/ll_singleLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/toolbar"
+            android:layout_margin="8dp">
+
+            <!-- date -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date:"
+                    android:textSize="@dimen/input_prompt"/>
+
+                <EditText
+                    android:id="@+id/et_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="January 10th"
+                    android:inputType="date"
+                    android:minHeight="48dp" />
+
+                <CheckBox
+                    android:id="@+id/cb_date"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="TBA"/>
+            </LinearLayout>
+
+            <!-- time -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time:"
+                    android:textSize="@dimen/input_prompt"/>
+
+                <EditText
+                    android:id="@+id/et_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="7:10 AM"
+                    android:inputType="time"
+                    android:minHeight="48dp" />
+
+                <CheckBox
+                    android:id="@+id/cb_time"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="TBA"/>
+            </LinearLayout>
+
+            <!-- title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title:"
+                    android:textSize="@dimen/input_prompt"/>
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="textPersonName"
+                    android:hint=""
+                    android:minHeight="48dp" />
+
+                <View
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:text="TBA"/>
+            </LinearLayout>
+
+            <!-- Location -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location:"
+                    android:textSize="@dimen/input_prompt"/>
+                <EditText
+                    android:id="@+id/et_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="textPersonName"
+                    android:hint=""
+                    android:minHeight="48dp" />
+
+                <View
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:text="TBA"/>
+            </LinearLayout>
+
+            <ToggleButton
+                android:id="@+id/tb_public"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="ToggleButton"
+                android:textOff="Private"
+                android:textOn="Public" />
+
+        </LinearLayout>
+
+        <!-- description -->
+        <LinearLayout
+            android:id="@+id/ll_desciption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_singleLine"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description:"
+                android:textSize="@dimen/input_prompt"/>
+
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                android:layout_weight="1"
+                android:inputType="textLongMessage"/>
+
+        </LinearLayout>
+
+        <!-- submit -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Publish Event"
+                android:layout_below="@id/ll_desciption"/>
+
+    </RelativeLayout>
+    </ScrollView>
+</FrameLayout>
