@@ -74,17 +74,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_addevent:
-                Toast.makeText(this, "Add Event!", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return true;
-    }
-
-
     // Used from other fragments to populate apps toolbar with its own
     // while keeping the standard/cross fragment toolbar features (hamburger menu)
     // Passing -1 as menu will remove it
@@ -99,9 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // Set current toolbar. I dont know the proper way to do this. However InvalidateOptionsMenu() will recall onCreateOptionsMenu() with the new currentToolBarMenu
         currentToolbarMenu = menu;
 
-
         invalidateOptionsMenu();
-
 
         // Add standard features
         // Add menu to toolbar
@@ -155,4 +142,17 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_addevent:
+                Toast.makeText(this, "Add Event!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_addfriend:
+                Toast.makeText(this, "Add Friend!", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
 }
