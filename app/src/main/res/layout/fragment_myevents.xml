@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,7 +20,20 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
             app:title="@string/your_events"
-            app:menu="@menu/menu_plus"/>
+            app:menu="@menu/menu_plus">
+
+            <!--
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:background="@color/primary"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"/>
+            -->
+        </androidx.appcompat.widget.Toolbar>
 
         <TextView
             android:layout_width="match_parent"

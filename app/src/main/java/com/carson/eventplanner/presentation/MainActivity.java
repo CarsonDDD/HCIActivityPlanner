@@ -1,5 +1,7 @@
 package com.carson.eventplanner.presentation;
 
+import androidx.annotation.MenuRes;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.carson.eventplanner.presentation.fragments.BookmarksFragment;
 import com.carson.eventplanner.presentation.fragments.CalendarFragment;
@@ -31,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private RecyclerView rvDrawerMenu;
+
+    private @MenuRes int currentToolbarMenu = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,36 +68,40 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if(currentToolbarMenu != -1){
+            getMenuInflater().inflate(currentToolbarMenu, menu);
+        }
+        return true;
+    }
 
-        // Set up the search bar
-        // searchItem is null. Find a fix
-        /*MenuItem searchItem = menu.findItem(R.id.search_view);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint(getResources().getString(R.string.search_hint));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Handle query submission
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Handle query text change
-                return false;
-            }
-        });*/
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_addevent:
+                Toast.makeText(this, "Add Event!", Toast.LENGTH_SHORT).show();
+                break;
+        }
         return true;
     }
 
 
     // Used from other fragments to populate apps toolbar with its own
     // while keeping the standard/cross fragment toolbar features (hamburger menu)
-    public void setToolbar(Toolbar toolbar) {
+    // Passing -1 as menu will remove it
+    public void setToolbar(Toolbar toolbar){
+        setToolbar(toolbar, -1);
+    }
+
+    public void setToolbar(Toolbar toolbar, @MenuRes int menu) {
         // Set toolbar
         setSupportActionBar(toolbar);
+
+        // Set current toolbar. I dont know the proper way to do this. However InvalidateOptionsMenu() will recall onCreateOptionsMenu() with the new currentToolBarMenu
+        currentToolbarMenu = menu;
+
+
+        invalidateOptionsMenu();
+
 
         // Add standard features
         // Add menu to toolbar

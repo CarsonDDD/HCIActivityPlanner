@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.presentation.MainActivity;
@@ -36,6 +39,7 @@ public class EventListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        parent.setToolbar(view.findViewById(R.id.toolbar));
+        parent.setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_plus);
     }
+
 }

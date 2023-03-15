@@ -8,43 +8,12 @@
     android:fitsSystemWindows="true">
 
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        app:title="@string/app_name"
-        app:contentInsetStart="0dp"
-        android:visibility="gone">
-
-      <!-- Search bar -->
-      <androidx.appcompat.widget.SearchView
-          android:id="@+id/search_view"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_margin="8dp"
-          android:layout_marginEnd="8dp"
-          android:paddingStart="-20dp"
-          app:iconifiedByDefault="false"
-          app:queryHint="@string/search_hint" />
-
-
-    </androidx.appcompat.widget.Toolbar>
-
+    <!-- Main view -->
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_discovery"
         android:id="@+id/fragment_container"/>
-  </LinearLayout>
-
 
     <!-- Navigation drawer. I dont know how this works -->
     <androidx.recyclerview.widget.RecyclerView
