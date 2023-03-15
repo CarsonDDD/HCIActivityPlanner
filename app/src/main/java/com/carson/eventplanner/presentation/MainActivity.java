@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     switchFragment(new InvitesFragment());
                     break;
                 case "friends":
-                    switchFragment(new FriendsFragment());
+                    switchFragment(new FriendsFragment(getThis()));
                     break;
                 case "your events":
                     switchFragment(new EventListFragment(getThis()));

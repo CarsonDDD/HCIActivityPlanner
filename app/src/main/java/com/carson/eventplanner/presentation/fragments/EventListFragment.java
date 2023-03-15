@@ -14,15 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.carson.eventplanner.R;
+import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
 
-public class EventListFragment extends Fragment {
+public class EventListFragment extends ACCIFragment {
 
-    // Dirty way to get parent reference. Dont know how to do this with pre existing android studio things
-    MainActivity parent;
-
-    public EventListFragment(MainActivity parent){
-        this.parent = parent;
+    public EventListFragment(MainActivity mainActivity) {
+        super(mainActivity);
     }
 
     @Override
@@ -39,7 +37,7 @@ public class EventListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        parent.setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_plus);
+        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_plus);
     }
 
 }
