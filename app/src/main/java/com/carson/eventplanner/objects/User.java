@@ -33,6 +33,14 @@ public class User {
     public void joinEvent(Event event){
         joinedEvents.add(event);
     }
+
+    public List<Event> getCreatedEvents(){
+        return createdEvents;
+    }
+
+    public List<Event> getJoinedEvents(){
+        return joinedEvents;
+    }
     /*public int getProfileImage() {
         return 0;
     }*/
