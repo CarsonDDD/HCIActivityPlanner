@@ -37,7 +37,6 @@ public class DiscoveryFragment extends ACCIFragment {
     // event views
     private RecyclerView rvCategories, rvPopular, rvRecommended, rvUpcoming, rvFiltered;
     private TextView searchText, noResults;
-    List<Event> allEvents = new ArrayList<>();
 
     public DiscoveryFragment(MainActivity mainActivity) {
         super(mainActivity);
@@ -58,9 +57,7 @@ public class DiscoveryFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-
         getAppCompact().setToolbar(view.findViewById(R.id.toolbar));
-        Event tempEvent;
 
         //Hide search content
         rvFiltered = view.findViewById(R.id.rv_search_results);
@@ -73,62 +70,32 @@ public class DiscoveryFragment extends ACCIFragment {
         // Set up the event categories
         rvCategories = view.findViewById(R.id.rv_event_categories);
         List<EventCategory> eventCategories = new ArrayList<>();
-        eventCategories.add(new EventCategory("Category 1"));
-        eventCategories.add(new EventCategory("Category 2"));
-        eventCategories.add(new EventCategory("Category 3"));
+        eventCategories.add(new EventCategory("Concerts"));
+        eventCategories.add(new EventCategory("Outdoors"));
+        eventCategories.add(new EventCategory("Creative"));
+        eventCategories.add(new EventCategory("Learning"));
+        eventCategories.add(new EventCategory("Dinner and Show"));
         EventCategoryAdapter eventCategoryAdapter = new EventCategoryAdapter(eventCategories);
         rvCategories.setAdapter(eventCategoryAdapter);
 
-        // Popular events
+        // set up events
+        List<Event> popEventList = getAppCompact().allEvents.subList(0,4);
+
+        List<Event> upcomingList = getAppCompact().allEvents.subList(0,4);
+
+        List<Event> recommendedList = getAppCompact().allEvents.subList(3,7);
+
+
         rvPopular = view.findViewById(R.id.rv_popular_events);
-        //rvPopular.setLayoutManager(new LinearLayoutManager(this));
-        List<Event> popEventList = new ArrayList<>();
-        List<Event> upcomingList = new ArrayList<>();
-
-        tempEvent = new Event("golf with friends");
-        popEventList.add(tempEvent);
-        upcomingList.add(tempEvent);
-        allEvents.add(tempEvent);
-
-        tempEvent = new Event("music in the park");
-        popEventList.add(tempEvent);
-        upcomingList.add(tempEvent);
-        allEvents.add(tempEvent);
-
-        tempEvent = new Event("game night");
-        popEventList.add(tempEvent);
-        upcomingList.add(tempEvent);
-        allEvents.add(tempEvent);
-
         EventAdapter popularEventsAdapter = new EventAdapter(popEventList, R.layout.item_event);
         rvPopular.setAdapter(popularEventsAdapter);
 
-        // Recommended Events
-        rvRecommended = view.findViewById(R.id.rv_recommended_events);
-        //rvRecommended.setLayoutManager(new LinearLayoutManager(this));
-        List<Event> recommendedList = new ArrayList<>();
-        tempEvent = new Event("shuffle board");
-        recommendedList.add(tempEvent);
-        allEvents.add(tempEvent);
-
-        tempEvent = new Event("bird watching");
-        recommendedList.add(tempEvent);
-        allEvents.add(tempEvent);
-
-        tempEvent = new Event("Complaining");
-        recommendedList.add(tempEvent);
-        allEvents.add(tempEvent);
-
+        rvRecommended = view.findViewById(R.id.rv_recommended_events)
         EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList, R.layout.item_event);
         rvRecommended.setAdapter(recommendedEventsAdapter);
 
         // Upcoming Events
         rvUpcoming = view.findViewById(R.id.rv_upcoming_events);
-        //rvUpcoming.setLayoutManager(new LinearLayoutManager(this));
-//        List<Event> upcomingList = new ArrayList<>();
-//        upcomingList.add(new Event("golf with friends"));
-//        upcomingList.add(new Event("music in the park"));
-//        upcomingList.add(new Event("game night"));
         EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event);
         rvUpcoming.setAdapter(upcomingEventsAdapter);
 
@@ -153,7 +120,7 @@ public class DiscoveryFragment extends ACCIFragment {
                     rvFiltered.setVisibility(View.VISIBLE);
                     searchText.setVisibility(View.VISIBLE);
 
-                    for (Event event : allEvents) {
+                    for (Event event : getAppCompact().allEvents) {
                         if (event.getTitle().toLowerCase().contains(newText)) {
                             filtered.add(event);
                         }
@@ -184,6 +151,13 @@ public class DiscoveryFragment extends ACCIFragment {
 
     // Event handlers for each card click
     final private EventCategoryAdapter.OnItemClickListener categoryClick = new EventCategoryAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(EventCategory eventCategory) {
+
+        }
+    };
+
+    final private EventAdapter.OnItemClickListener categoryClick = new EventCategoryAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(EventCategory eventCategory) {
 

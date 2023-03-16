@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.presentation.fragments.CreateEventFragment;
 import com.carson.eventplanner.objects.User;
 import com.carson.eventplanner.presentation.fragments.BookmarksFragment;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     // The "database"
     private User currentUser;
 
+    public List<Event> allEvents;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,64 @@ public class MainActivity extends AppCompatActivity {
         // Init user
         // Add all user hardcoded data here
         currentUser = new User("JoeBlow");
+
+        allEvents = new ArrayList<>();
+
+        User joe = new User("Joe");
+        User carson = new User("Carson");
+        User obi = new User("Obi");
+        User casandra = new User("Casandra");
+        User ian = new User("Ian");
+        User saad = new User("Sa'ad");
+
+        Event school = new Event("Human Computer Interaction","March 16","10am","Biological Sciences Building","give A\nso tired", true);
+        Event concert1 = new Event("Mom Jeans","March 17","9pm","23 osbourne","Live music", true);
+        Event darts = new Event("Darts","March 18","8pm","Whispering Bean","Come down to play darts!", true);
+        Event concert2 = new Event("SkyRaid","March 16","9pm","56 main street","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", true);
+        Event golf = new Event("Night Gold","March 20","10pm","Park","golf, but extra hard", true);
+        Event game = new Event("Game Night","March 20","7pm","124 clare street","Come and play games", true);
+        Event shuffle = new Event("Shuffle Board","March 21","2pm","89 left street","come play shuffle board and not be bored.", true);
+        Event bird = new Event("Night Gold","March 21","10pm","Park","golf, but extra hard", true);
+        Event cook = new Event("Learn to Cook","March 22","12pm","66 six street","Learn the pans!", true);
+        Event race = new Event("Drag Race","March 29","8am","1273 go ave","got a fast car? join now!", true);
+        Event joke = new Event("Open mic night","April 1","9pm","23 osbourne","funny jokes and good food!", true);
+        Event sky = new Event("Learn to sky dive.","April 4","9am","124 clare street","We will take you through every jump to make you an expert.", true);
+        Event magic = new Event("Magic show","April 7","7pm","Whispering Bean","We will take you through every jump to make you an expert.", true);
+
+        school.addOrganizer(carson);
+        school.addOrganizer(obi);
+        school.addOrganizer(casandra);
+        school.addOrganizer(ian);
+        school.addOrganizer(saad);
+
+        concert1.addOrganizer(joe);
+        darts.addOrganizer(carson);
+        concert2.addOrganizer(obi);
+        golf.addOrganizer(casandra);
+        game.addOrganizer(ian);
+        shuffle.addOrganizer(saad);
+        bird.addOrganizer(carson);
+        cook.addOrganizer(carson);
+        race.addOrganizer(obi);
+        joke.addOrganizer(casandra);
+        sky.addOrganizer(ian);
+        magic.addOrganizer(saad);
+
+        currentUser.joinEvent(school);
+
+        allEvents.add(school);
+        allEvents.add(concert1);
+        allEvents.add(darts);
+        allEvents.add(concert2);
+        allEvents.add(golf);
+        allEvents.add(game);
+        allEvents.add(shuffle);
+        allEvents.add(bird);
+        allEvents.add(cook);
+        allEvents.add(race);
+        allEvents.add(joke);
+        allEvents.add(sky);
+        allEvents.add(magic);
 
 
         // Set current fragment
