@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.carson.eventplanner.R;
-import com.carson.eventplanner.objects.Event;
+import com.carson.eventplanner.objects.EventInvitation;
 import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
-import com.carson.eventplanner.presentation.adapters.EventAdapter;
-import com.carson.eventplanner.presentation.adapters.InviteAdapter;
+import com.carson.eventplanner.presentation.adapters.EventInvitationAdapter;
 
 import java.util.List;
 
@@ -44,12 +42,12 @@ public class InvitesFragment extends ACCIFragment {
 
         RecyclerView rvInvites = view.findViewById(R.id.rv_invites);
         rvInvites.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        /*List<Event> myEvents = new ArrayList<>();
+        /*List<EventInvitation> myEvents = new ArrayList<>();
         myEvents.add(new Event("golf with friends"));
         myEvents.add(new Event("music in the park"));
         myEvents.add(new Event("game night"));*/
-        List<Event> userCreatedEvents = getAppCompact().getActiveUser().getInvites();
-        InviteAdapter inviteAdapter = new InviteAdapter(userCreatedEvents, R.layout.item_invite);
-        rvInvites.setAdapter(inviteAdapter);
+        List<EventInvitation> userInvites = getAppCompact().getActiveUser().getInvites();
+        EventInvitationAdapter eventInvitationAdapter = new EventInvitationAdapter(userInvites, R.layout.item_invite);
+        rvInvites.setAdapter(eventInvitationAdapter);
     }
 }
