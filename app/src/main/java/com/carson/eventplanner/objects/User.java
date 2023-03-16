@@ -29,13 +29,10 @@ public class User {
     }
 
     public void createEvent(Event event){
-        event.setOrganizer(this);
+        event.addOrganizer(this);
         createdEvents.add(event);
     }
 
-    public void joinEvent(Event event){
-        joinedEvents.add(event);
-    }
 
     public List<Event> getCreatedEvents(){
         return createdEvents;
@@ -47,6 +44,11 @@ public class User {
 
     public List<Event> getInvitations(){
         return invitations;
+    }
+
+    public void joinEvent(Event event){
+        joinedEvents.add(event);
+        event.getAttendees().add(this);
     }
     /*public int getProfileImage() {
         return 0;

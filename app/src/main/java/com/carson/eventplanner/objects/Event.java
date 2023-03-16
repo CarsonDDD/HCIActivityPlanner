@@ -2,6 +2,9 @@ package com.carson.eventplanner.objects;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Event {
     private String title;
     private String date;
@@ -10,7 +13,8 @@ public class Event {
     private String description;
     private boolean isPublic;
 
-    private User organizer;
+    private List<User> organizers;
+    private List<User> attendees;
 
     // Image later
     private final static String TBA = "TBA";
@@ -42,6 +46,9 @@ public class Event {
 
         this.description = description;
         this.isPublic = isPublic;
+
+        organizers = new ArrayList<>();
+        attendees = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -68,19 +75,37 @@ public class Event {
         return isPublic;
     }
 
-    public void setOrganizer(User organizer){
-        this.organizer = organizer;
+    public void addOrganizer(User organizer){
+        organizers.add(organizer);
     }
 
-    @Nullable
-    public User getOrganizer(){
-        return organizer;
+    public List<User> getOrganizers(){
+        return organizers;
     }
 
-    public void createEvent(User organizer){
-        organizer.createEvent(this);
-        this.organizer = organizer;
+    public void createEvent(List<User> eventCreators){
+        for(User user : eventCreators){
+            user.createEvent(this);
+            organizers.add(user);
+        }
     }
+
+    public void createEvent(User creator){
+        List<User> temp = new ArrayList<>();
+        temp.add(creator);
+        createEvent(temp);
+    }
+
+    public void addAttendee(User person){
+        attendees.add(person);
+        person.getJoinedEvents().add(this);
+    }
+
+    public List<User> getAttendees(){
+        return attendees;
+    }
+
+
 
     /*public int getImageResource() {
         return 0;
