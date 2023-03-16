@@ -13,7 +13,7 @@ import com.carson.eventplanner.objects.User;
 
 import java.util.List;
 
-public class FriendAdapter extends RecyclerView.Adapter<EventInvitationAdapter.FriendViewHolder> {
+public class FriendAdapter extends RecyclerView.Adapter<InviteAdapter.FriendViewHolder> {
 
     private final List<User> friendList;
     //private final OnItemClickListener listener;
@@ -30,13 +30,13 @@ public class FriendAdapter extends RecyclerView.Adapter<EventInvitationAdapter.F
 
     @NonNull
     @Override
-    public EventInvitationAdapter.FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InviteAdapter.FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friends, parent, false);
-        return new EventInvitationAdapter.FriendViewHolder(view);
+        return new InviteAdapter.FriendViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventInvitationAdapter.FriendViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InviteAdapter.FriendViewHolder holder, int position) {
         holder.bind(friendList.get(position)/*, listener*/);
     }
 
