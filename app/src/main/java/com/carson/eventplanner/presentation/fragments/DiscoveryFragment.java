@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+//import android.widget.SearchView;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
@@ -27,11 +30,14 @@ import com.carson.eventplanner.presentation.adapters.EventCategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DiscoveryFragment extends ACCIFragment {
 
     // event views
-    private RecyclerView rvCategories, rvPopular, rvRecommended, rvUpcoming;
+    private RecyclerView rvCategories, rvPopular, rvRecommended, rvUpcoming, rvFiltered;
+    private TextView searchText, noResults;
+    List<Event> allEvents = new ArrayList<>();
 
     public DiscoveryFragment(MainActivity mainActivity) {
         super(mainActivity);
@@ -54,6 +60,15 @@ public class DiscoveryFragment extends ACCIFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
 
         getAppCompact().setToolbar(view.findViewById(R.id.toolbar));
+        Event tempEvent;
+
+        //Hide search content
+        rvFiltered = view.findViewById(R.id.rv_search_results);
+        rvFiltered.setVisibility(View.GONE);
+        searchText = view.findViewById(R.id.tv_search_results);
+        searchText.setVisibility(View.GONE);
+        noResults = view.findViewById(R.id.no_search_results);
+        noResults.setVisibility(View.GONE);
 
         // Set up the event categories
         rvCategories = view.findViewById(R.id.rv_event_categories);
@@ -68,9 +83,23 @@ public class DiscoveryFragment extends ACCIFragment {
         rvPopular = view.findViewById(R.id.rv_popular_events);
         //rvPopular.setLayoutManager(new LinearLayoutManager(this));
         List<Event> popEventList = new ArrayList<>();
-        popEventList.add(new Event("golf with friends"));
-        popEventList.add(new Event("music in the park"));
-        popEventList.add(new Event("game night"));
+        List<Event> upcomingList = new ArrayList<>();
+
+        tempEvent = new Event("golf with friends");
+        popEventList.add(tempEvent);
+        upcomingList.add(tempEvent);
+        allEvents.add(tempEvent);
+
+        tempEvent = new Event("music in the park");
+        popEventList.add(tempEvent);
+        upcomingList.add(tempEvent);
+        allEvents.add(tempEvent);
+
+        tempEvent = new Event("game night");
+        popEventList.add(tempEvent);
+        upcomingList.add(tempEvent);
+        allEvents.add(tempEvent);
+
         EventAdapter popularEventsAdapter = new EventAdapter(popEventList, R.layout.item_event);
         rvPopular.setAdapter(popularEventsAdapter);
 
@@ -78,22 +107,79 @@ public class DiscoveryFragment extends ACCIFragment {
         rvRecommended = view.findViewById(R.id.rv_recommended_events);
         //rvRecommended.setLayoutManager(new LinearLayoutManager(this));
         List<Event> recommendedList = new ArrayList<>();
-        recommendedList.add(new Event("shuffle board"));
-        recommendedList.add(new Event("bird watching"));
-        recommendedList.add(new Event("Complaining"));
+        tempEvent = new Event("shuffle board");
+        recommendedList.add(tempEvent);
+        allEvents.add(tempEvent);
+
+        tempEvent = new Event("bird watching");
+        recommendedList.add(tempEvent);
+        allEvents.add(tempEvent);
+
+        tempEvent = new Event("Complaining");
+        recommendedList.add(tempEvent);
+        allEvents.add(tempEvent);
+
         EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList, R.layout.item_event);
         rvRecommended.setAdapter(recommendedEventsAdapter);
 
         // Upcoming Events
         rvUpcoming = view.findViewById(R.id.rv_upcoming_events);
         //rvUpcoming.setLayoutManager(new LinearLayoutManager(this));
-        List<Event> upcomingList = new ArrayList<>();
-        upcomingList.add(new Event("golf with friends"));
-        upcomingList.add(new Event("music in the park"));
-        upcomingList.add(new Event("game night"));
+//        List<Event> upcomingList = new ArrayList<>();
+//        upcomingList.add(new Event("golf with friends"));
+//        upcomingList.add(new Event("music in the park"));
+//        upcomingList.add(new Event("game night"));
         EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event);
         rvUpcoming.setAdapter(upcomingEventsAdapter);
 
+
+        SearchView searchView = view.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            //rvFiltered = view.findViewById(R.id.rv_search_results);
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                //rvFiltered.setVisibility(View.VISIBLE);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                List<Event> filtered = new ArrayList<Event>();
+
+                if(!newText.equals("")) {
+                    rvFiltered.setVisibility(View.VISIBLE);
+                    searchText.setVisibility(View.VISIBLE);
+
+                    for (Event event : allEvents) {
+                        if (event.getTitle().toLowerCase().contains(newText)) {
+                            filtered.add(event);
+                        }
+                    }
+
+                    EventAdapter filteredEvents = new EventAdapter(filtered, R.layout.item_event);
+                    rvFiltered.setAdapter(filteredEvents);
+
+                    if(filtered.size() != 0) {
+                        noResults.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        noResults.setVisibility(View.VISIBLE);
+                    }
+                }
+                else
+                {
+                    rvFiltered.setVisibility(View.GONE);
+                    searchText.setVisibility(View.GONE);
+                    noResults.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+        });
     }
 
     // Event handlers for each card click
