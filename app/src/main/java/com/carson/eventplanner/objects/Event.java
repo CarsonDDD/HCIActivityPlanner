@@ -75,8 +75,9 @@ public class Event {
         return isPublic;
     }
 
-    public void addOrganizer(User organizer){
-        organizers.add(organizer);
+    public void addOrganizer(User person){
+        organizers.add(person);
+        person.getCreatedEvents().add(this);
     }
 
     public List<User> getOrganizers(){

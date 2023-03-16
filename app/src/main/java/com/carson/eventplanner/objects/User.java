@@ -30,7 +30,6 @@ public class User {
 
     public void createEvent(Event event){
         event.addOrganizer(this);
-        createdEvents.add(event);
     }
 
 
