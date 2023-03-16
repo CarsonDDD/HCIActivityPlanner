@@ -37,8 +37,9 @@ public class InvitesFragment extends ACCIFragment {
         return inflater.inflate(R.layout.fragment_invites, container, false);
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar));
+        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape);
 
         RecyclerView rvInvites = view.findViewById(R.id.rv_invites);
         rvInvites.setLayoutManager(new LinearLayoutManager(getAppCompact()));

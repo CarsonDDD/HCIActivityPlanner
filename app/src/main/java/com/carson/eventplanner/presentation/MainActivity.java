@@ -1,6 +1,8 @@
 package com.carson.eventplanner.presentation;
 
 import androidx.annotation.MenuRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +22,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.carson.eventplanner.objects.Event;
@@ -35,7 +38,10 @@ import com.carson.eventplanner.presentation.fragments.EventPageFragment;
 import com.carson.eventplanner.presentation.fragments.FriendsFragment;
 import com.carson.eventplanner.presentation.fragments.InvitesFragment;
 import com.carson.eventplanner.presentation.fragments.EventListFragment;
+import com.carson.eventplanner.presentation.fragments.ProfileFragment;
 import com.carson.eventplanner.presentation.fragments.RecommendationFragment;
+import com.google.android.material.navigation.NavigationBarMenu;
+import com.google.android.material.navigation.NavigationView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -43,14 +49,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-
-    private RecyclerView rvDrawerMenu;
-
     private @MenuRes int currentToolbarMenu = -1;
-
-
 
     // The "database"
     private User currentUser;
@@ -195,20 +194,29 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-        // set up Hamburger drawer. Icon changing should be done here too
-        rvDrawerMenu = findViewById(R.id.rv_drawer_menu);
-        rvDrawerMenu.setLayoutManager(new LinearLayoutManager(this));
-        List<String> drawerItems = new ArrayList<>();
-        drawerItems.add("Home");
-        drawerItems.add("Invites");
-        drawerItems.add("Friends");
-        drawerItems.add("Your Events");
-        drawerItems.add("Bookmarks");
-        drawerItems.add("Recommendations");
-        drawerItems.add("Calendar");
-        DrawerMenuAdapter drawerMenuAdapter = new DrawerMenuAdapter(drawerItems, menuClick);
-        rvDrawerMenu.setAdapter(drawerMenuAdapter);
+        NavigationView navbar = findViewById(R.id.navigation_bar);
 
+        navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_search:
+                        // Handle the "Home" item
+                        break;
+                    case R.id.menu_discovery:
+                        switchFragment(new DiscoveryFragment(getThis()));
+                        break;
+                    case R.id.menu_profile:
+                        // Handle the "Profile" item
+                        switchFragment(new ProfileFragment(getThis()));
+                        break;
+                    // Add cases for other menu items as needed
+                }
+                // Set the item as checked to highlight it in the NavigationView
+                menuItem.setChecked(true);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -243,15 +251,6 @@ public class MainActivity extends AppCompatActivity {
         currentToolbarMenu = menu;
 
         invalidateOptionsMenu(); // Might need to call this after showDrawer check. The internet says this calls onCreateOptionsMenu, wonder what else?
-
-        // Add standard features
-        // Add menu to toolbar
-        if(showDrawer){
-            drawerLayout = findViewById(R.id.drawer_layout);
-            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawerLayout.addDrawerListener(actionBarDrawerToggle);
-            actionBarDrawerToggle.syncState();
-        }
     }
 
     public void switchFragment(ACCIFragment newFragment){
@@ -262,10 +261,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, newFragment);
         fragmentTransaction.commit();
-
-        // Highlight current drawer item
-
-        drawerLayout.close();
     }
 
     public User getActiveUser() {
@@ -338,6 +333,10 @@ public class MainActivity extends AppCompatActivity {
                     currentUser.removeBookMark(currentEvent);
                     // remove the saved event
                 }
+                break;
+            case R.id.action_notifications:
+                // Change fragment back to frivolous, right now just always to same spot
+                switchFragment(new InvitesFragment(getThis()));
                 break;
         }
         return true;
