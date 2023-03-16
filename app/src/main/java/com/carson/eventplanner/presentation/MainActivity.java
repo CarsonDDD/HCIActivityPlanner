@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.carson.eventplanner.CreateEventFragment;
 import com.carson.eventplanner.presentation.fragments.BookmarksFragment;
 import com.carson.eventplanner.presentation.fragments.CalendarFragment;
 import com.carson.eventplanner.presentation.fragments.DiscoveryFragment;
@@ -148,9 +149,14 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_addevent:
                 Toast.makeText(this, "Add Event!", Toast.LENGTH_SHORT).show();
+                switchFragment(new CreateEventFragment(getThis()));
                 break;
             case R.id.action_addfriend:
                 Toast.makeText(this, "Add Friend!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_escape_create_event:
+                // Change fragment back to frivolous, right now just always to same spot
+                switchFragment(new EventListFragment(getThis()));
                 break;
         }
         return true;
