@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Init user
+        // Add all user hardcoded data here
+        currentUser = new User("JoeBlow");
+
+
         // Set current fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new DiscoveryFragment(this));
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-    private void switchFragment(Fragment newFragment){
+    public void switchFragment(Fragment newFragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, newFragment);
         fragmentTransaction.commit();

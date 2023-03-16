@@ -17,6 +17,7 @@ import android.widget.ToggleButton;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
+import com.carson.eventplanner.presentation.fragments.EventListFragment;
 
 public class CreateEventFragment extends ACCIFragment {
 
@@ -68,6 +69,9 @@ public class CreateEventFragment extends ACCIFragment {
                 // Add event to user
                 Event createdEvent = new Event(title, date, time, location, desc, isPublic);
                 getAppCompact().getActiveUser().createEvent(createdEvent);
+
+                // CLOSE OUT OF SCREEN
+                getAppCompact().switchFragment(new EventListFragment(getAppCompact()));
             }
         });
     }
