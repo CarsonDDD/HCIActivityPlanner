@@ -10,6 +10,8 @@
     <string name="events">Events</string>
     <string name="recommended_events">Recommended</string>
     <string name="event_categories">Categories</string>
+    <string name="search_results">Search Results</string>
+    <string name="no_search_results">No results found</string>
     <string name="popular_events">Popular</string>
     <string name="upcoming_events">Upcoming</string>
     <string name="navigation_drawer_open">open test</string>
