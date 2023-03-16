@@ -16,7 +16,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="4dp">
 
         <ImageView
             android:id="@+id/iv_event"
@@ -37,7 +38,15 @@
             android:textColor="@color/primary"
             app:layout_constraintTop_toBottomOf="@id/iv_event"
             android:layout_alignParentLeft="true"
-            android:textSize="22sp"/>
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/tv_organizer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Joe Blow"
+            android:layout_below="@id/tv_event_title"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tv_event_date"
@@ -46,7 +55,7 @@
             android:text="April 1, 2020"
             android:textAlignment="viewStart"
             android:layout_alignParentRight="true"
-            android:textSize="22sp"/>
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,7 +63,8 @@
             android:text="5pm"
             android:layout_below="@id/tv_event_date"
             android:layout_alignStart="@id/tv_event_date"
-            android:id="@+id/tv_event_time"/>
+            android:id="@+id/tv_event_time"
+            android:textSize="16sp"/>
 
 
     </RelativeLayout>

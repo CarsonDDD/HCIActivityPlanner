@@ -53,6 +53,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         private final TextView title;
         private final TextView date;
         private final TextView time;
+        private final TextView org;
         //private final ImageView image;
 
         public EventViewHolder(@NonNull View itemView) {
@@ -60,7 +61,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             title = itemView.findViewById(R.id.tv_event_title);
             date = itemView.findViewById(R.id.tv_event_date);
             time = itemView.findViewById(R.id.tv_event_time);
-
+            org = itemView.findViewById(R.id.tv_organizer);
             //image = itemView.findViewById(R.id.iv_event);
         }
 
@@ -68,6 +69,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             title.setText(event.getTitle());
             date.setText(event.getDate());
             time.setText(event.getTime());
+
+            if(org != null && event.getOrganizer() != null){
+                org.setText(event.getOrganizer().getUserName());
+            }
+
             /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

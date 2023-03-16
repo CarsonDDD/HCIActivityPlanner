@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +16,6 @@ import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
-import com.carson.eventplanner.presentation.adapters.InviteAdapter;
 
 import java.util.List;
 
@@ -48,8 +46,8 @@ public class InvitesFragment extends ACCIFragment {
         myEvents.add(new Event("golf with friends"));
         myEvents.add(new Event("music in the park"));
         myEvents.add(new Event("game night"));*/
-        /*List<EventInvitation> userInvites = getAppCompact().getActiveUser().getInvites();
-        EventInvitationAdapter eventInvitationAdapter = new EventInvitationAdapter(userInvites, R.layout.item_invite);
-        rvInvites.setAdapter(eventInvitationAdapter);*/
+        List<Event> userInvites = getAppCompact().getActiveUser().getInvitations();
+        EventAdapter eventAdapter = new EventAdapter(userInvites, R.layout.item_invite);
+        rvInvites.setAdapter(eventAdapter);
     }
 }

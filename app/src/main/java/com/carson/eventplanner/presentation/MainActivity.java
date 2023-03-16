@@ -1,7 +1,6 @@
 package com.carson.eventplanner.presentation;
 
 import androidx.annotation.MenuRes;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.carson.eventplanner.CreateEventFragment;
+import com.carson.eventplanner.presentation.fragments.CreateEventFragment;
 import com.carson.eventplanner.objects.User;
 import com.carson.eventplanner.presentation.fragments.BookmarksFragment;
 import com.carson.eventplanner.presentation.fragments.CalendarFragment;

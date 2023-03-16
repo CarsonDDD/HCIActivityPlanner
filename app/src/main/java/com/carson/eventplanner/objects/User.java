@@ -10,12 +10,14 @@ public class User {
     private List<User> friends;
     private List<Event> createdEvents;
     private List<Event> joinedEvents;
+    private List<Event> invitations;
 
     public User(String userName) {
         this.userName = userName;
         friends = new ArrayList<User>();
         createdEvents = new ArrayList<Event>();
         joinedEvents = new ArrayList<Event>();
+        invitations = new ArrayList<Event>();
     }
 
     public String getUserName() {
@@ -27,6 +29,7 @@ public class User {
     }
 
     public void createEvent(Event event){
+        event.setOrganizer(this);
         createdEvents.add(event);
     }
 
@@ -40,6 +43,10 @@ public class User {
 
     public List<Event> getJoinedEvents(){
         return joinedEvents;
+    }
+
+    public List<Event> getInvitations(){
+        return invitations;
     }
     /*public int getProfileImage() {
         return 0;

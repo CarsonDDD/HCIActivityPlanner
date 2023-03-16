@@ -1,4 +1,4 @@
-package com.carson.eventplanner;
+package com.carson.eventplanner.presentation.fragments;
 
 import android.os.Bundle;
 
@@ -15,6 +15,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
@@ -78,7 +79,7 @@ public class CreateEventFragment extends ACCIFragment {
 
                 // Add event to user
                 Event createdEvent = new Event(title, date, time, location, desc, isPublic);
-                getAppCompact().getActiveUser().createEvent(createdEvent);
+                createdEvent.createEvent(getAppCompact().getActiveUser());
 
                 // CLOSE OUT OF SCREEN
                 getAppCompact().switchFragment(new EventListFragment(getAppCompact()));

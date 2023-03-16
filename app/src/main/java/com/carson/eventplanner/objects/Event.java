@@ -1,5 +1,7 @@
 package com.carson.eventplanner.objects;
 
+import androidx.annotation.Nullable;
+
 public class Event {
     private String title;
     private String date;
@@ -7,6 +9,8 @@ public class Event {
     private String location;
     private String description;
     private boolean isPublic;
+
+    private User organizer;
 
     // Image later
     private final static String TBA = "TBA";
@@ -62,6 +66,20 @@ public class Event {
 
     public boolean isPublic() {
         return isPublic;
+    }
+
+    public void setOrganizer(User organizer){
+        this.organizer = organizer;
+    }
+
+    @Nullable
+    public User getOrganizer(){
+        return organizer;
+    }
+
+    public void createEvent(User organizer){
+        organizer.createEvent(this);
+        this.organizer = organizer;
     }
 
     /*public int getImageResource() {
