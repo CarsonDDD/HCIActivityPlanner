@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.carson.eventplanner.objects.Event;
@@ -39,7 +40,7 @@ public class CreateEventFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape_create_event);
+        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape_create_event, false);
 
         // Publish logic.
         // Grab all input from display and create event
@@ -65,6 +66,15 @@ public class CreateEventFragment extends ACCIFragment {
                 String location = locText.getText().toString();
                 String desc = descText.getText().toString();
                 boolean isPublic = publicSwitch.isChecked();
+
+                // TODO: TBA CHECK HERE
+                // CURRENTLY THERE IS NO TBA CheckBox Check
+
+                // Check validity
+                if(title.isEmpty()){
+                    Toast.makeText(getAppCompact(), "Invalid event name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // Add event to user
                 Event createdEvent = new Event(title, date, time, location, desc, isPublic);

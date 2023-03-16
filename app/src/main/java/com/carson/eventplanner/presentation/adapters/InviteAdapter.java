@@ -13,7 +13,7 @@ import com.carson.eventplanner.objects.User;
 
 import java.util.List;
 
-public class FriendAdapter extends RecyclerView.Adapter<InviteAdapter.FriendViewHolder> {
+public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.FriendViewHolder> {
 
     private final List<User> friendList;
     //private final OnItemClickListener listener;
@@ -22,7 +22,7 @@ public class FriendAdapter extends RecyclerView.Adapter<InviteAdapter.FriendView
         void onItemClick(Event eventCategory);
     }*/
 
-    public FriendAdapter(List<User> friendList/*, OnItemClickListener listener*/) {
+    public InviteAdapter(List<User> friendList/*, OnItemClickListener listener*/) {
         this.friendList = friendList;
         //this.listener = listener;
     }
