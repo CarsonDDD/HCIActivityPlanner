@@ -46,8 +46,8 @@ public class InvitesFragment extends ACCIFragment {
         myEvents.add(new Event("golf with friends"));
         myEvents.add(new Event("music in the park"));
         myEvents.add(new Event("game night"));*/
-        List<EventInvitation> userInvites = getAppCompact().getActiveUser().getInvites();
+        /*List<EventInvitation> userInvites = getAppCompact().getActiveUser().getInvites();
         EventInvitationAdapter eventInvitationAdapter = new EventInvitationAdapter(userInvites, R.layout.item_invite);
-        rvInvites.setAdapter(eventInvitationAdapter);
+        rvInvites.setAdapter(eventInvitationAdapter);*/
     }
 }
