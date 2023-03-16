@@ -9,17 +9,33 @@ public class Event {
     private boolean isPublic;
 
     // Image later
-
+    private final static String TBA = "TBA";
 
     public Event(String title) {
-        this(title,"TBA","TBA","TBA","An Event!", true);
+        this(title,"","","","", true);
     }
 
     public Event(String title, String date, String time, String location, String description, boolean isPublic){
-        this.title = title;
-        this.date = date;
-        this.time = time;
-        this.location = location;
+        if(title.isEmpty())
+            this.title = "Created Event";
+        else
+            this.title = title;
+
+        if(date.isEmpty())
+            this.date = TBA;
+        else
+            this.date = date;
+
+        if(time.isEmpty())
+            this.time = TBA;
+        else
+            this.time = time;
+
+        if(location.isEmpty())
+            this.location = TBA;
+        else
+            this.location = location;
+
         this.description = description;
         this.isPublic = isPublic;
     }
