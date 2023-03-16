@@ -1,4 +1,4 @@
 package com.carson.eventplanner.objects;
 
-public class EventInvitation {
+public class Invite {
 }
