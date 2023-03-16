@@ -58,6 +58,30 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_event_categories" />
 
+            <!--====================Search Results=========================-->
+            <TextView
+                android:id="@+id/tv_search_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/search_results"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_search_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_event_category"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_results" />
+            <TextView
+                android:id="@+id/no_search_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/no_search_results"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
 
             <!--=================== Popular events =============================-->
             <TextView

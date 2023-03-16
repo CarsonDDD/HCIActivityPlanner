@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.carson.eventplanner.R;
-import com.carson.eventplanner.objects.EventCategory;
 import com.carson.eventplanner.objects.User;
 import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
-import com.carson.eventplanner.presentation.adapters.EventCategoryAdapter;
-import com.carson.eventplanner.presentation.adapters.FriendAdapter;
+import com.carson.eventplanner.presentation.adapters.InviteAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +54,7 @@ public class FriendsFragment extends ACCIFragment {
         friends.add(new User("Casandra"));
         friends.add(new User("Ian"));
         friends.add(new User("Sa'ad"));
-        FriendAdapter friendAdapter = new FriendAdapter(friends);
-        rvFriends.setAdapter(friendAdapter);
+        InviteAdapter inviteAdapter = new InviteAdapter(friends);
+        rvFriends.setAdapter(inviteAdapter);
     }
 }

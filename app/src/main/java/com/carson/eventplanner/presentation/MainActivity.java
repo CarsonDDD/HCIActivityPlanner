@@ -89,24 +89,34 @@ public class MainActivity extends AppCompatActivity {
     // while keeping the standard/cross fragment toolbar features (hamburger menu)
     // Passing -1 as menu will remove it
     public void setToolbar(Toolbar toolbar){
-        setToolbar(toolbar, -1);
+        setToolbar(toolbar, true);
     }
 
-    public void setToolbar(Toolbar toolbar, @MenuRes int menu) {
+    public void setToolbar(Toolbar toolbar, boolean showDrawer){
+        setToolbar(toolbar, -1, showDrawer);
+    }
+
+    public void setToolbar(Toolbar toolbar, @MenuRes int menu){
+        setToolbar(toolbar, menu, true);
+    }
+
+    public void setToolbar(Toolbar toolbar, @MenuRes int menu, boolean showDrawer) {
         // Set toolbar
         setSupportActionBar(toolbar);
 
         // Set current toolbar. I dont know the proper way to do this. However InvalidateOptionsMenu() will recall onCreateOptionsMenu() with the new currentToolBarMenu
         currentToolbarMenu = menu;
 
-        invalidateOptionsMenu();
+        invalidateOptionsMenu(); // Might need to call this after showDrawer check. The internet says this calls onCreateOptionsMenu, wonder what else?
 
         // Add standard features
         // Add menu to toolbar
-        drawerLayout = findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
+        if(showDrawer){
+            drawerLayout = findViewById(R.id.drawer_layout);
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawerLayout.addDrawerListener(actionBarDrawerToggle);
+            actionBarDrawerToggle.syncState();
+        }
     }
 
     public void switchFragment(Fragment newFragment){
@@ -123,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
         return currentUser;
     }
 
+    private void showNavDrawer(){
+
+    }
+
     // Panic function
     // Yes this is mandatory, removing it will ensue in chaos
     private MainActivity getThis(){ return this;}
@@ -136,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     switchFragment(new DiscoveryFragment(getThis()));
                     break;
                 case "invites":
-                    switchFragment(new InvitesFragment());
+                    switchFragment(new InvitesFragment(getThis()));
                     break;
                 case "friends":
                     switchFragment(new FriendsFragment(getThis()));

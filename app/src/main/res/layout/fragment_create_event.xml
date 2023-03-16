@@ -51,7 +51,8 @@
                     android:layout_weight="1"
                     android:hint="January 10th"
                     android:inputType="date"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:layout_marginStart="8dp"/>
 
                 <CheckBox
                     android:id="@+id/cb_date"
@@ -78,7 +79,8 @@
                     android:layout_weight="1"
                     android:hint="7:10 AM"
                     android:inputType="time"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:layout_marginStart="8dp"/>
 
                 <CheckBox
                     android:id="@+id/cb_time"
@@ -104,7 +106,8 @@
                     android:layout_weight="1"
                     android:inputType="textPersonName"
                     android:hint=""
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:layout_marginStart="8dp"/>
 
                 <View
                     android:layout_width="70dp"
@@ -129,11 +132,13 @@
                     android:layout_weight="1"
                     android:inputType="textPersonName"
                     android:hint=""
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:layout_marginStart="8dp"/>
 
-                <View
+                <CheckBox
+                    android:id="@+id/cb_location"
                     android:layout_width="70dp"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="TBA"/>
             </LinearLayout>
 
@@ -154,7 +159,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_singleLine"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="8dp">
 
             <TextView
                 android:layout_width="match_parent"
