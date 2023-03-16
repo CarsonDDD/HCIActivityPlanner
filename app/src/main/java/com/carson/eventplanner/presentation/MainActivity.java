@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.carson.eventplanner.CreateEventFragment;
+import com.carson.eventplanner.objects.User;
 import com.carson.eventplanner.presentation.fragments.BookmarksFragment;
 import com.carson.eventplanner.presentation.fragments.CalendarFragment;
 import com.carson.eventplanner.presentation.fragments.DiscoveryFragment;
@@ -39,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvDrawerMenu;
 
     private @MenuRes int currentToolbarMenu = -1;
+
+
+    // The "database"
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
         // Highlight current drawer item
 
         drawerLayout.close();
+    }
+
+    public User getActiveUser() {
+        return currentUser;
     }
 
     // Panic function
