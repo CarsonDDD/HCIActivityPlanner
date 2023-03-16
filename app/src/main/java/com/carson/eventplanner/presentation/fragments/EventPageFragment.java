@@ -4,14 +4,24 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
@@ -24,7 +34,7 @@ import java.util.List;
 
 public class EventPageFragment extends ACCIFragment {
 
-    Event event;
+    public Event event;
 
     public EventPageFragment(MainActivity mainActivity, Event event) {
         super(mainActivity);
@@ -45,7 +55,28 @@ public class EventPageFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape, false);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        getAppCompact().setToolbar(toolbar);
+
+        // Only used to start the saved icon as filled :|
+        MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(Menu menu, MenuInflater menuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.menu_event, menu);
+                if(getAppCompact().getActiveUser().containsBookmark(event)){
+                    MenuItem myMenuItem = menu.findItem(R.id.action_save);
+                    myMenuItem.setIcon(R.drawable.ic_star_filled);
+                    myMenuItem.setChecked(true);
+                }
+            }
+            @Override
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+
 
         // Organizers
         RecyclerView rvOrgs = view.findViewById(R.id.rv_organizers);
@@ -76,6 +107,20 @@ public class EventPageFragment extends ACCIFragment {
         FriendAdapter attendeeAdapter = new FriendAdapter(event.getAttendees());
         rvAttendees.setAdapter(attendeeAdapter);
 
-
+        Button btnJoin = view.findViewById(R.id.btn_join);
+        if(!getAppCompact().getActiveUser().getJoinedEvents().contains(event) && !getAppCompact().getActiveUser().getCreatedEvents().contains(event)){
+            btnJoin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "Joined Event!", Toast.LENGTH_SHORT).show();
+                    getAppCompact().getActiveUser().joinEvent(event);
+                    btnJoin.setVisibility(View.GONE);
+                }
+            });
+        }
+        else{
+            btnJoin.setVisibility(View.GONE);
+        }
     }
+
 }

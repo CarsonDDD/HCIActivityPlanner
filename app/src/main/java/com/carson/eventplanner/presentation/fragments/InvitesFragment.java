@@ -42,10 +42,7 @@ public class InvitesFragment extends ACCIFragment {
 
         RecyclerView rvInvites = view.findViewById(R.id.rv_invites);
         rvInvites.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        /*List<Event> myEvents = new ArrayList<>();
-        myEvents.add(new Event("golf with friends"));
-        myEvents.add(new Event("music in the park"));
-        myEvents.add(new Event("game night"));*/
+
         List<Event> userInvites = getAppCompact().getActiveUser().getInvitations();
         EventAdapter eventAdapter = new EventAdapter(userInvites, R.layout.item_invite, getAppCompact().CLICK_EVENT);
         rvInvites.setAdapter(eventAdapter);

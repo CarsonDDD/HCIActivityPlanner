@@ -4,14 +4,21 @@ import androidx.annotation.MenuRes;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -30,6 +37,7 @@ import com.carson.eventplanner.presentation.fragments.InvitesFragment;
 import com.carson.eventplanner.presentation.fragments.EventListFragment;
 import com.carson.eventplanner.presentation.fragments.RecommendationFragment;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,10 +51,11 @@ public class MainActivity extends AppCompatActivity {
     private @MenuRes int currentToolbarMenu = -1;
 
 
+
     // The "database"
     private User currentUser;
     public List<Event> allEvents;
-    private ACCIFragment previousFragment;
+    public ACCIFragment previousFragment;
     private ACCIFragment currentFragment;
 
     @Override
@@ -210,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
     // Used from other fragments to populate apps toolbar with its own
     // while keeping the standard/cross fragment toolbar features (hamburger menu)
     // Passing -1 as menu will remove it
@@ -262,9 +272,6 @@ public class MainActivity extends AppCompatActivity {
         return currentUser;
     }
 
-    private void showNavDrawer(){
-
-    }
 
     // Panic function
     // Yes this is mandatory, removing it will ensue in chaos
@@ -287,10 +294,10 @@ public class MainActivity extends AppCompatActivity {
                 case "your events":
                     switchFragment(new EventListFragment(getThis()));
                     break;
-                /*case "bookmarks":
-                    switchFragment(new BookmarksFragment());
+                case "bookmarks":
+                    switchFragment(new BookmarksFragment(getThis()));
                     break;
-                case "recommendations":
+                /*case "recommendations":
                     switchFragment(new RecommendationFragment());
                     break;
                 case "calendar":
@@ -314,6 +321,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_escape:
                 // Change fragment back to frivolous, right now just always to same spot
                 switchFragment(previousFragment);
+                break;
+            case R.id.action_save:
+                //Close your eyes
+                Event currentEvent = ((EventPageFragment)currentFragment).event;// hack
+                item.setChecked(!item.isChecked());
+                if (item.isChecked()) {
+                    item.setIcon(R.drawable.ic_star_filled);
+                    Toast.makeText(this, "Bookmarked Event!", Toast.LENGTH_SHORT).show();
+
+                    currentUser.bookMark(currentEvent);
+                    // save the event
+                } else {
+                    item.setIcon(R.drawable.ic_star_border);
+                    Toast.makeText(this, "Removed Bookmark.", Toast.LENGTH_SHORT).show();
+                    currentUser.removeBookMark(currentEvent);
+                    // remove the saved event
+                }
                 break;
         }
         return true;

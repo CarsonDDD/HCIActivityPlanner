@@ -11,6 +11,7 @@ public class User {
     private List<Event> createdEvents;
     private List<Event> joinedEvents;
     private List<Event> invitations;
+    private List<Event> bookMarks;
 
     public User(String userName) {
         this.userName = userName;
@@ -18,6 +19,7 @@ public class User {
         createdEvents = new ArrayList<Event>();
         joinedEvents = new ArrayList<Event>();
         invitations = new ArrayList<Event>();
+        bookMarks = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -52,6 +54,30 @@ public class User {
 
     public List<User> getFriends() {
         return friends;
+    }
+
+    public boolean containsBookmark(Event target){
+        return bookMarks.contains(target);
+    }
+
+    public boolean bookMark(Event currentEvent) {
+        if(!containsBookmark(currentEvent)){
+            bookMarks.add(currentEvent);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeBookMark(Event currentEvent) {
+        if(containsBookmark(currentEvent)){
+            bookMarks.remove(currentEvent);
+            return true;
+        }
+        return false;
+    }
+
+    public List<Event> getBookMarks() {
+        return bookMarks;
     }
     /*public int getProfileImage() {
         return 0;
