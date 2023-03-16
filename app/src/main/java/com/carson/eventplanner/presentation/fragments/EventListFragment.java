@@ -46,26 +46,27 @@ public class EventListFragment extends ACCIFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_add_event);
 
+        // User Events
         rvMyEvent = view.findViewById(R.id.rv_myevents);
         rvMyEvent.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        List<Event> myEvents = new ArrayList<>();
+        /*List<Event> myEvents = new ArrayList<>();
         myEvents.add(new Event("golf with friends"));
         myEvents.add(new Event("music in the park"));
-        myEvents.add(new Event("game night"));
-        EventAdapter myEventsAdapter = new EventAdapter(myEvents, R.layout.item_event_alt);
+        myEvents.add(new Event("game night"));*/
+        List<Event> userCreatedEvents = getAppCompact().getActiveUser().getCreatedEvents();
+        EventAdapter myEventsAdapter = new EventAdapter(userCreatedEvents, R.layout.item_event_alt);
         rvMyEvent.setAdapter(myEventsAdapter);
 
-        // Popular events
+        // Joined events
         rvJoinedEvents = view.findViewById(R.id.rv_joinedevents);
         rvJoinedEvents.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        List<Event> joinedEvents = new ArrayList<>();
+        /*List<Event> joinedEvents = new ArrayList<>();
         joinedEvents.add(new Event("Event 1"));
         joinedEvents.add(new Event("Event 2"));
-        joinedEvents.add(new Event("Event 3"));
-        EventAdapter joinedEventsAdapter = new EventAdapter(joinedEvents, R.layout.item_event_alt);
+        joinedEvents.add(new Event("Event 3"));*/
+        List<Event> userJoinedEvents = getAppCompact().getActiveUser().getJoinedEvents();
+        EventAdapter joinedEventsAdapter = new EventAdapter(userJoinedEvents, R.layout.item_event_alt);
         rvJoinedEvents.setAdapter(joinedEventsAdapter);
-
-
     }
 
 }
