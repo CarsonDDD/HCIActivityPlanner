@@ -49,6 +49,10 @@ public class User {
         joinedEvents.add(event);
         event.getAttendees().add(this);
     }
+
+    public List<User> getFriends() {
+        return friends;
+    }
     /*public int getProfileImage() {
         return 0;
     }*/

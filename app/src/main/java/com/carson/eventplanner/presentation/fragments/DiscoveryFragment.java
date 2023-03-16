@@ -87,16 +87,16 @@ public class DiscoveryFragment extends ACCIFragment {
 
 
         rvPopular = view.findViewById(R.id.rv_popular_events);
-        EventAdapter popularEventsAdapter = new EventAdapter(popEventList, R.layout.item_event);
+        EventAdapter popularEventsAdapter = new EventAdapter(popEventList, R.layout.item_event, getAppCompact().CLICK_EVENT);
         rvPopular.setAdapter(popularEventsAdapter);
 
-        rvRecommended = view.findViewById(R.id.rv_recommended_events)
-        EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList, R.layout.item_event);
+        rvRecommended = view.findViewById(R.id.rv_recommended_events);
+        EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList, R.layout.item_event, getAppCompact().CLICK_EVENT);
         rvRecommended.setAdapter(recommendedEventsAdapter);
 
         // Upcoming Events
         rvUpcoming = view.findViewById(R.id.rv_upcoming_events);
-        EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event);
+        EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event, getAppCompact().CLICK_EVENT);
         rvUpcoming.setAdapter(upcomingEventsAdapter);
 
 
@@ -126,7 +126,7 @@ public class DiscoveryFragment extends ACCIFragment {
                         }
                     }
 
-                    EventAdapter filteredEvents = new EventAdapter(filtered, R.layout.item_event);
+                    EventAdapter filteredEvents = new EventAdapter(filtered, R.layout.item_event, getAppCompact().CLICK_EVENT);
                     rvFiltered.setAdapter(filteredEvents);
 
                     if(filtered.size() != 0) {
@@ -151,13 +151,6 @@ public class DiscoveryFragment extends ACCIFragment {
 
     // Event handlers for each card click
     final private EventCategoryAdapter.OnItemClickListener categoryClick = new EventCategoryAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(EventCategory eventCategory) {
-
-        }
-    };
-
-    final private EventAdapter.OnItemClickListener categoryClick = new EventCategoryAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(EventCategory eventCategory) {
 

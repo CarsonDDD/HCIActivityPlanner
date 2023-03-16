@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.fragments.EventFragment">
+    tools:context=".presentation.fragments.EventPageFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +19,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primary"
-                app:title="Event Title">
+                app:title="Event Title"
+                app:menu="@menu/menu_escape">
                 <!-- menu is added programically, shown here to visualize -->
             </androidx.appcompat.widget.Toolbar>
 
@@ -105,7 +106,7 @@
                         android:text="Location:"
                         android:textSize="@dimen/input_prompt"/>
                     <TextView
-                        android:id="@+id/et_date"
+                        android:id="@+id/tv_location"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -160,7 +161,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/rv_attendees"/>
 
             </LinearLayout>

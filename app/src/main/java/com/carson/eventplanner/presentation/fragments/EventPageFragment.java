@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,16 +18,15 @@ import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.objects.User;
 import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
-import com.carson.eventplanner.presentation.adapters.EventAdapter;
 import com.carson.eventplanner.presentation.adapters.FriendAdapter;
 
 import java.util.List;
 
-public class EventFragment extends ACCIFragment {
+public class EventPageFragment extends ACCIFragment {
 
     Event event;
 
-    public EventFragment(MainActivity mainActivity, Event event) {
+    public EventPageFragment(MainActivity mainActivity, Event event) {
         super(mainActivity);
         this.event = event;
     }
@@ -47,11 +45,11 @@ public class EventFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar));
+        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape, false);
 
         // Organizers
         RecyclerView rvOrgs = view.findViewById(R.id.rv_organizers);
-        rvOrgs.setLayoutManager(new LinearLayoutManager(getAppCompact()));
+        rvOrgs.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
         /*List<Event> myEvents = new ArrayList<>();
         myEvents.add(new Event("golf with friends"));
         myEvents.add(new Event("music in the park"));
@@ -67,7 +65,7 @@ public class EventFragment extends ACCIFragment {
         TextView tvTime = view.findViewById(R.id.tv_time);
         tvTime.setText(event.getTime());
 
-        TextView tvLocation = view.findViewById(R.id.et_location);
+        TextView tvLocation = view.findViewById(R.id.tv_location);
         tvLocation.setText(event.getLocation());
 
         TextView tvDesciption = view.findViewById(R.id.tv_description);

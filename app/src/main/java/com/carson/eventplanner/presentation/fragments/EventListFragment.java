@@ -54,7 +54,7 @@ public class EventListFragment extends ACCIFragment {
         myEvents.add(new Event("music in the park"));
         myEvents.add(new Event("game night"));*/
         List<Event> userCreatedEvents = getAppCompact().getActiveUser().getCreatedEvents();
-        EventAdapter myEventsAdapter = new EventAdapter(userCreatedEvents, R.layout.item_event_alt);
+        EventAdapter myEventsAdapter = new EventAdapter(userCreatedEvents, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
         rvMyEvent.setAdapter(myEventsAdapter);
 
         // Joined events
@@ -65,7 +65,7 @@ public class EventListFragment extends ACCIFragment {
         joinedEvents.add(new Event("Event 2"));
         joinedEvents.add(new Event("Event 3"));*/
         List<Event> userJoinedEvents = getAppCompact().getActiveUser().getJoinedEvents();
-        EventAdapter joinedEventsAdapter = new EventAdapter(userJoinedEvents, R.layout.item_event_alt);
+        EventAdapter joinedEventsAdapter = new EventAdapter(userJoinedEvents, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
         rvJoinedEvents.setAdapter(joinedEventsAdapter);
     }
 

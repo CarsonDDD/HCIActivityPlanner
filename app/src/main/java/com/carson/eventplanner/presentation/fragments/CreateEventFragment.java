@@ -4,14 +4,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -19,7 +17,6 @@ import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
-import com.carson.eventplanner.presentation.fragments.EventListFragment;
 
 public class CreateEventFragment extends ACCIFragment {
 
@@ -41,7 +38,7 @@ public class CreateEventFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape_create_event, false);
+        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape, false);
 
         // Publish logic.
         // Grab all input from display and create event

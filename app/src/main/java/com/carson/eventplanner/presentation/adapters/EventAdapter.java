@@ -19,16 +19,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     private final List<Event> eventList;
     private final int layout;
-    //private final OnItemClickListener listener;
+    private final OnEventClickListener listener;
 
-    /*public interface OnItemClickListener {
-        void onItemClick(Event eventCategory);
-    }*/
+    public interface OnEventClickListener {
+        void onItemClick(Event event);
+    }
 
-    public EventAdapter(List<Event> eventList, int layout/*, OnItemClickListener listener*/) {
+    public EventAdapter(List<Event> eventList, int layout, OnEventClickListener listener) {
         this.eventList = eventList;
         this.layout = layout;
-        //this.listener = listener;
+        this.listener = listener;
     }
 
 
@@ -41,7 +41,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @Override
     public void onBindViewHolder(@NonNull EventAdapter.EventViewHolder holder, int position) {
-        holder.bind(eventList.get(position)/*, listener*/);
+        holder.bind(eventList.get(position), listener);
     }
 
     @Override
@@ -65,21 +65,26 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             //image = itemView.findViewById(R.id.iv_event);
         }
 
-        public void bind(Event event){
+        public void bind(Event event, OnEventClickListener listener){
             title.setText(event.getTitle());
             date.setText(event.getDate());
             time.setText(event.getTime());
 
-            if(org != null && event.getOrganizer() != null){
-                org.setText(event.getOrganizer().getUserName());
+            if(org != null && event.getOrganizers() != null){
+                String sOrganizers = event.getOrganizers().get(0).getUserName();
+                if(event.getOrganizers().size() > 1){
+                    sOrganizers += " + " + event.getOrganizers().size() + " others";
+                }
+                org.setText(sOrganizers);
+
             }
 
-            /*itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(eventCategory);
+                    listener.onItemClick(event);
                 }
-            });*/
+            });
         }
     }
 }

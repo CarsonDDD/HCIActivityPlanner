@@ -47,14 +47,7 @@ public class FriendsFragment extends ACCIFragment {
         // Set up the event categories
         rvFriends = view.findViewById(R.id.rv_friends);
         rvFriends.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        List<User> friends = new ArrayList<>();
-        friends.add(new User("Joe"));
-        friends.add(new User("Carson"));
-        friends.add(new User("Obi"));
-        friends.add(new User("Casandra"));
-        friends.add(new User("Ian"));
-        friends.add(new User("Sa'ad"));
-        FriendAdapter eventInvitationAdapter = new FriendAdapter(friends);
+        FriendAdapter eventInvitationAdapter = new FriendAdapter(getAppCompact().getActiveUser().getFriends());
         rvFriends.setAdapter(eventInvitationAdapter);
     }
 }
