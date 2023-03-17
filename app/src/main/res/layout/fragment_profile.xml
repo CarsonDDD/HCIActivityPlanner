@@ -61,9 +61,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_created_events"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3"/>
+            android:layout_height="wrap_content" />
         </LinearLayout>
 
         <!--======== Joined Events ==========-->
@@ -101,9 +99,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_joined_events"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3"/>
+            android:layout_height="wrap_content" />
         </LinearLayout>
 
 
@@ -142,9 +138,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_bookmarked_events"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3"/>
+            android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
