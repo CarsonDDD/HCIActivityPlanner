@@ -100,7 +100,7 @@ public class DiscoveryFragment extends ACCIFragment {
         rvUpcoming.setAdapter(upcomingEventsAdapter);
 
 
-        SearchView searchView = view.findViewById(R.id.search_view);
+        /*SearchView searchView = view.findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             //rvFiltered = view.findViewById(R.id.rv_search_results);
@@ -146,7 +146,7 @@ public class DiscoveryFragment extends ACCIFragment {
 
                 return true;
             }
-        });
+        });*/
     }
 
     // Event handlers for each card click

@@ -43,7 +43,7 @@ public class ProfileFragment extends ACCIFragment {
         getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_add_event);
 
         // User Events
-        RecyclerView rvCreated = view.findViewById(R.id.rv_myevents);
+        RecyclerView rvCreated = view.findViewById(R.id.rv_created_events);
        // rvCreated.setLayoutManager(new LinearLayoutManager(getAppCompact()));
         List<Event> userCreatedEvents = getAppCompact().getActiveUser().getCreatedEvents();
         EventAdapter myEventsAdapter = new EventAdapter(userCreatedEvents, R.layout.item_event, getAppCompact().CLICK_EVENT);

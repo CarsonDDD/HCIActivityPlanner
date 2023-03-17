@@ -40,7 +40,9 @@ import com.carson.eventplanner.presentation.fragments.InvitesFragment;
 import com.carson.eventplanner.presentation.fragments.EventListFragment;
 import com.carson.eventplanner.presentation.fragments.ProfileFragment;
 import com.carson.eventplanner.presentation.fragments.RecommendationFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarMenu;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.lang.ref.WeakReference;
@@ -194,12 +196,13 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-        NavigationView navbar = findViewById(R.id.navigation_bar);
+        BottomNavigationView navbar = findViewById(R.id.navigation_bar);
+        navbar.getMenu().findItem(R.id.menu_discovery).setChecked(true);
 
-        navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
                     case R.id.menu_search:
                         // Handle the "Home" item
                         break;
@@ -213,10 +216,12 @@ public class MainActivity extends AppCompatActivity {
                     // Add cases for other menu items as needed
                 }
                 // Set the item as checked to highlight it in the NavigationView
-                menuItem.setChecked(true);
+                item.setChecked(true);
                 return true;
             }
         });
+
+
     }
 
     @Override
