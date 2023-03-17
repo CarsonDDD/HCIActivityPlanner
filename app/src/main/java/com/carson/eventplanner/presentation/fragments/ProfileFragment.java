@@ -50,14 +50,14 @@ public class ProfileFragment extends ACCIFragment {
         rvCreated.setAdapter(myEventsAdapter);
 
         // Joined events
-        RecyclerView rvJoined = view.findViewById(R.id.rv_joinedevents);
+        RecyclerView rvJoined = view.findViewById(R.id.rv_joined_events);
         //rvJoined.setLayoutManager(new LinearLayoutManager(getAppCompact()));
         List<Event> userJoinedEvents = getAppCompact().getActiveUser().getJoinedEvents();
         EventAdapter joinedEventsAdapter = new EventAdapter(userJoinedEvents, R.layout.item_event, getAppCompact().CLICK_EVENT);
         rvJoined.setAdapter(joinedEventsAdapter);
 
         // Bookmarked
-        RecyclerView rvBookmarked = view.findViewById(R.id.rv_joinedevents);
+        RecyclerView rvBookmarked = view.findViewById(R.id.rv_bookmarked_events);
         //rvJoined.setLayoutManager(new LinearLayoutManager(getAppCompact()));
         List<Event> userBookedmarkedEvents = getAppCompact().getActiveUser().getBookMarks();
         EventAdapter BookmarkedEventsAdapter = new EventAdapter(userBookedmarkedEvents, R.layout.item_event, getAppCompact().CLICK_EVENT);
