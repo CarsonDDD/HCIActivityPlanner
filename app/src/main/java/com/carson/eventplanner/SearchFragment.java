@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class SearchFragment extends ACCIFragment {
         getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_profile);
 
         rvResults = view.findViewById(R.id.rv_search_results);
-        // rvCreated.setLayoutManager(new LinearLayoutManager(getAppCompact()));
+        rvResults.setLayoutManager(new LinearLayoutManager(getAppCompact()));
         List<Event> events = getAppCompact().allEvents;
         EventAdapter eventAdapter = new EventAdapter(events, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
         rvResults.setAdapter(eventAdapter);
@@ -68,7 +69,7 @@ public class SearchFragment extends ACCIFragment {
                     }
                 }
 
-                EventAdapter filteredAdapter = new EventAdapter(filtered, R.layout.item_event, getAppCompact().CLICK_EVENT);
+                EventAdapter filteredAdapter = new EventAdapter(filtered, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
                 rvResults.setAdapter(filteredAdapter);
                 return true;
             }
