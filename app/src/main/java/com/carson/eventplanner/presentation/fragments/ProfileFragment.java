@@ -46,21 +46,21 @@ public class ProfileFragment extends ACCIFragment {
         RecyclerView rvCreated = view.findViewById(R.id.rv_created_events);
        // rvCreated.setLayoutManager(new LinearLayoutManager(getAppCompact()));
         List<Event> userCreatedEvents = getAppCompact().getActiveUser().getCreatedEvents();
-        EventAdapter myEventsAdapter = new EventAdapter(userCreatedEvents, R.layout.item_event, getAppCompact().CLICK_EVENT);
+        EventAdapter myEventsAdapter = new EventAdapter(userCreatedEvents, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
         rvCreated.setAdapter(myEventsAdapter);
 
         // Joined events
         RecyclerView rvJoined = view.findViewById(R.id.rv_joined_events);
         //rvJoined.setLayoutManager(new LinearLayoutManager(getAppCompact()));
         List<Event> userJoinedEvents = getAppCompact().getActiveUser().getJoinedEvents();
-        EventAdapter joinedEventsAdapter = new EventAdapter(userJoinedEvents, R.layout.item_event, getAppCompact().CLICK_EVENT);
+        EventAdapter joinedEventsAdapter = new EventAdapter(userJoinedEvents, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
         rvJoined.setAdapter(joinedEventsAdapter);
 
         // Bookmarked
         RecyclerView rvBookmarked = view.findViewById(R.id.rv_bookmarked_events);
         //rvJoined.setLayoutManager(new LinearLayoutManager(getAppCompact()));
         List<Event> userBookedmarkedEvents = getAppCompact().getActiveUser().getBookMarks();
-        EventAdapter BookmarkedEventsAdapter = new EventAdapter(userBookedmarkedEvents, R.layout.item_event, getAppCompact().CLICK_EVENT);
+        EventAdapter BookmarkedEventsAdapter = new EventAdapter(userBookedmarkedEvents, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
         rvBookmarked.setAdapter(BookmarkedEventsAdapter);
     }
 }

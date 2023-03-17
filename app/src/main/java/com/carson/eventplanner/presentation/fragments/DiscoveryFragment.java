@@ -57,7 +57,7 @@ public class DiscoveryFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar));
+        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_home);
 
         //Hide search content
         rvFiltered = view.findViewById(R.id.rv_search_results);
