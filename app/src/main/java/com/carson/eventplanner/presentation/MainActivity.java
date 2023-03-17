@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
         Event concert1 = new Event("Mom Jeans","March 17","9pm","23 osbourne","Live music", true);
         Event darts = new Event("Darts","March 18","8pm","Whispering Bean","Come down to play darts!", true);
         Event concert2 = new Event("SkyRaid","March 16","9pm","56 main street","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", true);
-        Event golf = new Event("Night Gold","March 20","10pm","Park","golf, but extra hard", true);
+        Event golf = new Event("Night Golf","March 20","10pm","Park","golf, but extra hard", true);
         Event game = new Event("Game Night","March 20","7pm","124 clare street","Come and play games", true);
         Event shuffle = new Event("Shuffle Board","March 21","2pm","89 left street","come play shuffle board and not be bored.", true);
-        Event bird = new Event("Night Golf","March 21","10pm","Park","golf, but extra hard", true);
+        Event bird = new Event("Bird Watching","March 21","10pm","Park","golf, but extra hard", true);
         Event cook = new Event("Learn to Cook","March 22","12pm","66 six street","Learn the pans!", true);
         Event race = new Event("Drag Race","March 29","8am","1273 go ave","got a fast car? join now!", true);
         Event joke = new Event("Open mic night","April 1","9pm","23 osbourne","funny jokes and good food!", true);
