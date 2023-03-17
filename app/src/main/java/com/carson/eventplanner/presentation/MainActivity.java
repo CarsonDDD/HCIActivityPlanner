@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.carson.eventplanner.SearchFragment;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
 import com.carson.eventplanner.presentation.fragments.CreateEventFragment;
@@ -204,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_search:
+                        switchFragment(new SearchFragment(getThis()));
                         // Handle the "Home" item
                         break;
                     case R.id.menu_discovery:

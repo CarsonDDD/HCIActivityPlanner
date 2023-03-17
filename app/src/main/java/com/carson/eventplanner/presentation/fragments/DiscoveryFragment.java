@@ -99,54 +99,6 @@ public class DiscoveryFragment extends ACCIFragment {
         EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event, getAppCompact().CLICK_EVENT);
         rvUpcoming.setAdapter(upcomingEventsAdapter);
 
-
-        /*SearchView searchView = view.findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            //rvFiltered = view.findViewById(R.id.rv_search_results);
-            @Override
-            public boolean onQueryTextSubmit(String query)
-            {
-                //rvFiltered.setVisibility(View.VISIBLE);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText)
-            {
-                List<Event> filtered = new ArrayList<Event>();
-
-                if(!newText.equals("")) {
-                    rvFiltered.setVisibility(View.VISIBLE);
-                    searchText.setVisibility(View.VISIBLE);
-
-                    for (Event event : getAppCompact().allEvents) {
-                        if (event.getTitle().toLowerCase().contains(newText)) {
-                            filtered.add(event);
-                        }
-                    }
-
-                    EventAdapter filteredEvents = new EventAdapter(filtered, R.layout.item_event, getAppCompact().CLICK_EVENT);
-                    rvFiltered.setAdapter(filteredEvents);
-
-                    if(filtered.size() != 0) {
-                        noResults.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        noResults.setVisibility(View.VISIBLE);
-                    }
-                }
-                else
-                {
-                    rvFiltered.setVisibility(View.GONE);
-                    searchText.setVisibility(View.GONE);
-                    noResults.setVisibility(View.GONE);
-                }
-
-                return true;
-            }
-        });*/
     }
 
     // Event handlers for each card click
