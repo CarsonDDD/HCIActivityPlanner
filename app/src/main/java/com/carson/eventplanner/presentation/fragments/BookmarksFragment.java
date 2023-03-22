@@ -13,19 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.carson.eventplanner.R;
-import com.carson.eventplanner.objects.User;
-import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
-import com.carson.eventplanner.presentation.adapters.FriendAdapter;
 
-import java.util.List;
-
-public class BookmarksFragment extends ACCIFragment {
-
-    public BookmarksFragment(MainActivity mainActivity) {
-        super(mainActivity);
-    }
+public class BookmarksFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +32,10 @@ public class BookmarksFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar));
         // Organizers
         RecyclerView events = view.findViewById(R.id.rv_events);
-        events.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        EventAdapter eventInvitationAdapter = new EventAdapter(getAppCompact().getActiveUser().getBookMarks(), R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
+        events.setLayoutManager(new LinearLayoutManager(getActivity()));
+        EventAdapter eventInvitationAdapter = new EventAdapter( ((MainActivity)getActivity()).getActiveUser().getBookMarks(), R.layout.item_event_alt,  ((MainActivity)getActivity()).CLICK_EVENT);
         events.setAdapter(eventInvitationAdapter);
     }
 }

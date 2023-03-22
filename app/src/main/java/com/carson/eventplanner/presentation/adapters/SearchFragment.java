@@ -1,4 +1,4 @@
-package com.carson.eventplanner;
+package com.carson.eventplanner.presentation.adapters;
 
 import android.os.Bundle;
 
@@ -10,28 +10,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
-import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
-import com.carson.eventplanner.presentation.adapters.EventAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends ACCIFragment {
+public class SearchFragment extends Fragment {
 
     RecyclerView rvResults;
-
-    public SearchFragment(MainActivity mainActivity) {
-        super(mainActivity);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    // inflate toolbar with menu
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_profile, menu);
     }
 
     @Override
@@ -43,12 +47,11 @@ public class SearchFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_profile);
 
         rvResults = view.findViewById(R.id.rv_search_results);
-        rvResults.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        List<Event> events = getAppCompact().allEvents;
-        EventAdapter eventAdapter = new EventAdapter(events, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
+        rvResults.setLayoutManager(new LinearLayoutManager(getActivity()));
+        List<Event> events = ((MainActivity)getActivity()).allEvents;
+        EventAdapter eventAdapter = new EventAdapter(events, R.layout.item_event_alt, ((MainActivity)getActivity()).CLICK_EVENT);
         rvResults.setAdapter(eventAdapter);
 
         SearchView searchView = view.findViewById(R.id.sv_event_search);
@@ -69,7 +72,7 @@ public class SearchFragment extends ACCIFragment {
                     }
                 }
 
-                EventAdapter filteredAdapter = new EventAdapter(filtered, R.layout.item_event_alt, getAppCompact().CLICK_EVENT);
+                EventAdapter filteredAdapter = new EventAdapter(filtered, R.layout.item_event_alt, ((MainActivity)getActivity()).CLICK_EVENT);
                 rvResults.setAdapter(filteredAdapter);
                 return true;
             }

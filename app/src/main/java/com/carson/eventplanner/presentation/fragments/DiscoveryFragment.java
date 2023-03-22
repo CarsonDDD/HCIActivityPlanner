@@ -4,71 +4,50 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 //import android.widget.SearchView;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.objects.EventCategory;
-import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
-import com.carson.eventplanner.presentation.adapters.DrawerMenuAdapter;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
 import com.carson.eventplanner.presentation.adapters.EventCategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class DiscoveryFragment extends ACCIFragment {
-
-    // event views
-    private RecyclerView rvCategories, rvPopular, rvRecommended, rvUpcoming, rvFiltered;
-    private TextView searchText, noResults;
-
-    public DiscoveryFragment(MainActivity mainActivity) {
-        super(mainActivity);
-    }
-
-
+public class DiscoveryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    // inflate toolbar with menu
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_home, menu);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_discovery, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_home);
-
-        //Hide search content
-        rvFiltered = view.findViewById(R.id.rv_search_results);
-        rvFiltered.setVisibility(View.GONE);
-        searchText = view.findViewById(R.id.tv_search_results);
-        searchText.setVisibility(View.GONE);
-        noResults = view.findViewById(R.id.no_search_results);
-        noResults.setVisibility(View.GONE);
+        View view =  inflater.inflate(R.layout.fragment_discovery, container, false);
 
         // Set up the event categories
-        rvCategories = view.findViewById(R.id.rv_event_categories);
+        RecyclerView rvCategories = view.findViewById(R.id.rv_event_categories);
         List<EventCategory> eventCategories = new ArrayList<>();
         eventCategories.add(new EventCategory("Concerts"));
         eventCategories.add(new EventCategory("Outdoors"));
@@ -79,26 +58,41 @@ public class DiscoveryFragment extends ACCIFragment {
         rvCategories.setAdapter(eventCategoryAdapter);
 
         // set up events
-        List<Event> popEventList = getAppCompact().allEvents.subList(0,4);
+        // Random selection from list
+        List<Event> popEventList = ((MainActivity)getActivity()).allEvents.subList(0,4);
 
-        List<Event> upcomingList = getAppCompact().allEvents.subList(0,4);
+        List<Event> upcomingList = ((MainActivity)getActivity()).allEvents.subList(0,4);
 
-        List<Event> recommendedList = getAppCompact().allEvents.subList(3,7);
+        List<Event> recommendedList = ((MainActivity)getActivity()).allEvents.subList(3,7);
 
 
-        rvPopular = view.findViewById(R.id.rv_popular_events);
-        EventAdapter popularEventsAdapter = new EventAdapter(popEventList, R.layout.item_event, getAppCompact().CLICK_EVENT);
+        RecyclerView rvPopular = view.findViewById(R.id.rv_popular_events);
+        EventAdapter popularEventsAdapter = new EventAdapter(popEventList, R.layout.item_event, ((MainActivity)getActivity()).CLICK_EVENT);
         rvPopular.setAdapter(popularEventsAdapter);
 
-        rvRecommended = view.findViewById(R.id.rv_recommended_events);
-        EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList, R.layout.item_event, getAppCompact().CLICK_EVENT);
+        RecyclerView rvRecommended = view.findViewById(R.id.rv_recommended_events);
+        EventAdapter recommendedEventsAdapter = new EventAdapter(recommendedList, R.layout.item_event, ((MainActivity)getActivity()).CLICK_EVENT);
         rvRecommended.setAdapter(recommendedEventsAdapter);
 
         // Upcoming Events
-        rvUpcoming = view.findViewById(R.id.rv_upcoming_events);
-        EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event, getAppCompact().CLICK_EVENT);
+        RecyclerView rvUpcoming = view.findViewById(R.id.rv_upcoming_events);
+        EventAdapter upcomingEventsAdapter = new EventAdapter(upcomingList, R.layout.item_event, ((MainActivity)getActivity()).CLICK_EVENT);
         rvUpcoming.setAdapter(upcomingEventsAdapter);
 
+        androidx.appcompat.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_notifications:
+                        Toast.makeText(getContext(), "Notifications", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        return view;
     }
 
     // Event handlers for each card click

@@ -4,30 +4,35 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
-import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
 
 import java.util.List;
 
-public class InvitesFragment extends ACCIFragment {
-
-    public InvitesFragment(MainActivity mainActivity) {
-        super(mainActivity);
-    }
+public class InvitesFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_escape, menu);
+
     }
 
     @Override
@@ -39,13 +44,11 @@ public class InvitesFragment extends ACCIFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape);
-
         RecyclerView rvInvites = view.findViewById(R.id.rv_invites);
-        rvInvites.setLayoutManager(new LinearLayoutManager(getAppCompact()));
+        rvInvites.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<Event> userInvites = getAppCompact().getActiveUser().getInvitations();
-        EventAdapter eventAdapter = new EventAdapter(userInvites, R.layout.item_invite, getAppCompact().CLICK_EVENT);
+        List<Event> userInvites = ((MainActivity)getActivity()).getActiveUser().getInvitations();
+        EventAdapter eventAdapter = new EventAdapter(userInvites, R.layout.item_invite, ((MainActivity)getActivity()).CLICK_EVENT);
         rvInvites.setAdapter(eventAdapter);
     }
 }

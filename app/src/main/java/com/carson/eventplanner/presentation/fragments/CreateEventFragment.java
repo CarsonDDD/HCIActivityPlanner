@@ -4,8 +4,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,41 +20,32 @@ import android.widget.ToggleButton;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
-import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
 
-public class CreateEventFragment extends ACCIFragment {
-
-    public CreateEventFragment(MainActivity mainActivity) {
-        super(mainActivity);
-    }
+public class CreateEventFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_escape, menu);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_event, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_escape, false);
-
+        View view =  inflater.inflate(R.layout.fragment_create_event, container, false);
         // Publish logic.
         // Grab all input from display and create event
         Button publish = view.findViewById(R.id.btn_publish);
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Scan layout
-                // Create event
-                // Add event to active user
-
                 //Get user inputted text fields
                 EditText titleText = getView().findViewById(R.id.et_title);
                 EditText dateText = getView().findViewById(R.id.et_date);
@@ -70,18 +66,33 @@ public class CreateEventFragment extends ACCIFragment {
 
                 // Check validity
                 if(title.isEmpty()){
-                    Toast.makeText(getAppCompact(), "Invalid event name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Invalid event name", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Add event to user
                 Event createdEvent = new Event(title, date, time, location, desc, isPublic);
-                createdEvent.createEvent(getAppCompact().getActiveUser());
+                createdEvent.createEvent( ((MainActivity)getActivity()).getActiveUser());
 
                 // CLOSE OUT OF SCREEN
-                getAppCompact().switchFragment(new EventListFragment(getAppCompact()));
+                ((MainActivity)getActivity()).changeFragment(new EventListFragment());
             }
         });
-    }
 
+        // Toolbar
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_escape:
+                        ((MainActivity)getActivity()).undoFragment();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        return view;
+    }
 }

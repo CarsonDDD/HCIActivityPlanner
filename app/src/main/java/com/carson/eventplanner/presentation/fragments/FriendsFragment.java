@@ -4,33 +4,28 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.carson.eventplanner.R;
-import com.carson.eventplanner.objects.User;
-import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.FriendAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class FriendsFragment extends ACCIFragment {
+public class FriendsFragment extends Fragment {
 
     private RecyclerView rvFriends;
-
-    public FriendsFragment(MainActivity mainActivity) {
-        super(mainActivity);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -40,14 +35,18 @@ public class FriendsFragment extends ACCIFragment {
         return inflater.inflate(R.layout.fragment_friends, container, false);
     }
 
+    // inflate toolbar with menu
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_add_friend, menu);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        getAppCompact().setToolbar(view.findViewById(R.id.toolbar), R.menu.menu_add_friend);
-
         // Set up the event categories
         rvFriends = view.findViewById(R.id.rv_friends);
-        rvFriends.setLayoutManager(new LinearLayoutManager(getAppCompact()));
-        FriendAdapter eventInvitationAdapter = new FriendAdapter(getAppCompact().getActiveUser().getFriends());
+        rvFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
+        FriendAdapter eventInvitationAdapter = new FriendAdapter(((MainActivity)getActivity()).getActiveUser().getFriends());
         rvFriends.setAdapter(eventInvitationAdapter);
     }
 }

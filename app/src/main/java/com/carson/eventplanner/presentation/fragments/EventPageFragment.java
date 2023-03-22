@@ -4,10 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,63 +21,49 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.objects.User;
-import com.carson.eventplanner.presentation.ACCIFragment;
 import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.FriendAdapter;
 
 import java.util.List;
 
-public class EventPageFragment extends ACCIFragment {
+public class EventPageFragment extends Fragment {
 
     public Event event;
 
-    public EventPageFragment(MainActivity mainActivity, Event event) {
-        super(mainActivity);
+    public EventPageFragment(Event event) {
         this.event = event;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    // inflate toolbar with menu
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_event, menu);
+
+        // Starting condition for save icon
+        if( ((MainActivity)getActivity()).getActiveUser().containsBookmark(event)){
+            MenuItem myMenuItem = menu.findItem(R.id.action_save);
+            myMenuItem.setIcon(R.drawable.ic_star_filled);
+            myMenuItem.setChecked(true);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event, container, false);
-    }
+        View view =  inflater.inflate(R.layout.fragment_event, container, false);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        getAppCompact().setToolbar(toolbar);
-
-        // Only used to start the saved icon as filled :|
-        MenuHost menuHost = requireActivity();
-        menuHost.addMenuProvider(new MenuProvider() {
-            @Override
-            public void onCreateMenu(Menu menu, MenuInflater menuInflater) {
-                // Add menu items here
-                menuInflater.inflate(R.menu.menu_event, menu);
-                if(getAppCompact().getActiveUser().containsBookmark(event)){
-                    MenuItem myMenuItem = menu.findItem(R.id.action_save);
-                    myMenuItem.setIcon(R.drawable.ic_star_filled);
-                    myMenuItem.setChecked(true);
-                }
-            }
-            @Override
-            public boolean onMenuItemSelected(MenuItem menuItem) {
-                return false;
-            }
-        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
-
-
-        // Organizers
         RecyclerView rvOrgs = view.findViewById(R.id.rv_organizers);
         rvOrgs.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
         /*List<Event> myEvents = new ArrayList<>();
@@ -108,12 +93,12 @@ public class EventPageFragment extends ACCIFragment {
         rvAttendees.setAdapter(attendeeAdapter);
 
         Button btnJoin = view.findViewById(R.id.btn_join);
-        if(!getAppCompact().getActiveUser().getJoinedEvents().contains(event) && !getAppCompact().getActiveUser().getCreatedEvents().contains(event)){
+        if(!((MainActivity)getActivity()).getActiveUser().getJoinedEvents().contains(event) && !((MainActivity)getActivity()).getActiveUser().getCreatedEvents().contains(event)){
             btnJoin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(getContext(), "Joined Event!", Toast.LENGTH_SHORT).show();
-                    getAppCompact().getActiveUser().joinEvent(event);
+                    ((MainActivity)getActivity()).getActiveUser().joinEvent(event);
                     btnJoin.setVisibility(View.GONE);
                 }
             });
@@ -121,6 +106,39 @@ public class EventPageFragment extends ACCIFragment {
         else{
             btnJoin.setVisibility(View.GONE);
         }
-    }
 
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_escape:
+                        // Change fragment back to frivolous, right now just always to same spot
+                        ((MainActivity)getActivity()).undoFragment();
+                        break;
+                    case R.id.action_save:
+                        //Close your eyes
+                        Event currentEvent = event;
+                        item.setChecked(!item.isChecked());
+                        if (item.isChecked()) {
+                            item.setIcon(R.drawable.ic_star_filled);
+                            Toast.makeText(getContext(), "Bookmarked Event!", Toast.LENGTH_SHORT).show();
+
+                            ((MainActivity)getActivity()).getActiveUser().bookMark(currentEvent);
+                            // save the event
+                        } else {
+                            item.setIcon(R.drawable.ic_star_border);
+                            Toast.makeText(getContext(), "Removed Bookmark.", Toast.LENGTH_SHORT).show();
+                            ((MainActivity)getActivity()).getActiveUser().removeBookMark(currentEvent);
+                            // remove the saved event
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+
+        return view;
+    }
 }

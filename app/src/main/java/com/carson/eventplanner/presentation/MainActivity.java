@@ -2,36 +2,23 @@ package com.carson.eventplanner.presentation;
 
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuProvider;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleEventObserver;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.OnLifecycleEvent;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.carson.eventplanner.SearchFragment;
+import com.carson.eventplanner.presentation.adapters.SearchFragment;
 import com.carson.eventplanner.objects.Event;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
 import com.carson.eventplanner.presentation.fragments.CreateEventFragment;
 import com.carson.eventplanner.objects.User;
 import com.carson.eventplanner.presentation.fragments.BookmarksFragment;
-import com.carson.eventplanner.presentation.fragments.CalendarFragment;
 import com.carson.eventplanner.presentation.fragments.DiscoveryFragment;
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.presentation.adapters.DrawerMenuAdapter;
@@ -40,32 +27,14 @@ import com.carson.eventplanner.presentation.fragments.FriendsFragment;
 import com.carson.eventplanner.presentation.fragments.InvitesFragment;
 import com.carson.eventplanner.presentation.fragments.EventListFragment;
 import com.carson.eventplanner.presentation.fragments.ProfileFragment;
-import com.carson.eventplanner.presentation.fragments.RecommendationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarMenu;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private @MenuRes int currentToolbarMenu = -1;
-
-    // The "database"
-    private User currentUser;
-    public List<Event> allEvents;
-    public ACCIFragment previousFragment;
-    private ACCIFragment currentFragment;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        currentFragment = new DiscoveryFragment(this);
-
+    void setupData(){
         // Init user
         // Add all user hardcoded data here
         currentUser = new User("JoeBlow");
@@ -189,13 +158,23 @@ public class MainActivity extends AppCompatActivity {
         allEvents.add(joke);
         allEvents.add(sky);
         allEvents.add(magic);
+    }
 
+    // The "database"
+    private User currentUser;
+    public User getActiveUser(){
+        return currentUser;
+    }
+    public List<Event> allEvents;
 
-        // Set current fragment
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, new DiscoveryFragment(this));
-        fragmentTransaction.commit();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        setupData();
+
+        changeFragment(new DiscoveryFragment());
 
         BottomNavigationView navbar = findViewById(R.id.navigation_bar);
         navbar.getMenu().findItem(R.id.menu_discovery).setChecked(true);
@@ -205,20 +184,19 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_search:
-                        switchFragment(new SearchFragment(getThis()));
+                        changeFragment(new SearchFragment());
                         // Handle the "Home" item
                         break;
                     case R.id.menu_discovery:
-                        switchFragment(new DiscoveryFragment(getThis()));
+                        changeFragment(new DiscoveryFragment());
                         break;
                     case R.id.menu_profile:
                         // Handle the "Profile" item
-                        switchFragment(new ProfileFragment(getThis()));
+                        changeFragment(new ProfileFragment(getActiveUser()));
                         break;
-                    // Add cases for other menu items as needed
                 }
                 // Set the item as checked to highlight it in the NavigationView
-                item.setChecked(true);
+                //item.setChecked(true);
                 return true;
             }
         });
@@ -226,124 +204,66 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Public function to be used outside this class without needing to touch its caller
+    public void changeFragment(Fragment fragment){
+        this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container,fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void undoFragment(){
+        if(getSupportFragmentManager().getBackStackEntryCount() > 1){
+            getSupportFragmentManager().popBackStack();
+            updateNavigationBar();
+        }
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if(currentToolbarMenu != -1){
-            getMenuInflater().inflate(currentToolbarMenu, menu);
+    public void onBackPressed() {
+        //super.onBackPressed();
+        undoFragment();
+    }
+
+    // Make sure the navigation bar has the correct fragment checked
+    private void updateNavigationBar(){
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        BottomNavigationView navbar = findViewById(R.id.navigation_bar);
+
+        // hmmmmmm. I believe .setSelectedItemId calls the above fragment switching code. This effectively modifies the stack in a way where nav buttons cannot be back swiped.
+        // This was the old behaviour before using the manager stack. Writing this code, I did not intent for this to work like this, nonetheless I am pleasantly pleased.
+        /*if(currentFragment instanceof DiscoveryViewFragment){
+            navbar.setSelectedItemId(R.id.nav_discovery);
         }
-        return true;
-    }
-
-
-    // Used from other fragments to populate apps toolbar with its own
-    // while keeping the standard/cross fragment toolbar features (hamburger menu)
-    // Passing -1 as menu will remove it
-    public void setToolbar(Toolbar toolbar){
-        setToolbar(toolbar, true);
-    }
-
-    public void setToolbar(Toolbar toolbar, boolean showDrawer){
-        setToolbar(toolbar, -1, showDrawer);
-    }
-
-    public void setToolbar(Toolbar toolbar, @MenuRes int menu){
-        setToolbar(toolbar, menu, true);
-    }
-
-    public void setToolbar(Toolbar toolbar, @MenuRes int menu, boolean showDrawer) {
-        // Set toolbar
-        setSupportActionBar(toolbar);
-
-        // Set current toolbar. I dont know the proper way to do this. However InvalidateOptionsMenu() will recall onCreateOptionsMenu() with the new currentToolBarMenu
-        currentToolbarMenu = menu;
-
-        invalidateOptionsMenu(); // Might need to call this after showDrawer check. The internet says this calls onCreateOptionsMenu, wonder what else?
-    }
-
-    public void switchFragment(ACCIFragment newFragment){
-
-        previousFragment = currentFragment;
-        currentFragment = newFragment;
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, newFragment);
-        fragmentTransaction.commit();
-    }
-
-    public User getActiveUser() {
-        return currentUser;
-    }
-
-
-    // Panic function
-    // Yes this is mandatory, removing it will ensue in chaos
-    private MainActivity getThis(){ return this;}
-
-
-    final private DrawerMenuAdapter.OnItemClickListener menuClick = new DrawerMenuAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(String id) {
-            switch (id.toLowerCase()){
-                case "home":
-                    switchFragment(new DiscoveryFragment(getThis()));
-                    break;
-                case "invites":
-                    switchFragment(new InvitesFragment(getThis()));
-                    break;
-                case "friends":
-                    switchFragment(new FriendsFragment(getThis()));
-                    break;
-                case "your events":
-                    switchFragment(new EventListFragment(getThis()));
-                    break;
-                case "bookmarks":
-                    switchFragment(new BookmarksFragment(getThis()));
-                    break;
-                /*case "recommendations":
-                    switchFragment(new RecommendationFragment());
-                    break;
-                case "calendar":
-                    switchFragment(new CalendarFragment());
-                    break;*/
-            }
-
+        else if(currentFragment instanceof SearchViewFragment){
+            navbar.setSelectedItemId(R.id.nav_search);
         }
-    };
+        else if(currentFragment instanceof PantryFragment){
+            navbar.setSelectedItemId(R.id.nav_pantry);
+        }
+        else if(currentFragment instanceof RecipeInsertFragment){
+            navbar.setSelectedItemId(R.id.nav_insert_recipe);
+        }
+        else if(currentFragment instanceof ProfileViewFragment && ((ProfileViewFragment)currentFragment).isCurrentUser()){
+            navbar.setSelectedItemId(R.id.nav_profile);
+        }*/
+
+        // else.... nothing.
+    }
+
+    public void showNavigationBar(boolean showBar){
+        BottomNavigationView nav = findViewById(R.id.navigation_bar);
+        if(showBar)
+            nav.setVisibility(View.VISIBLE);
+        else
+            nav.setVisibility(View.GONE);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_addevent:
-                Toast.makeText(this, "Add Event!", Toast.LENGTH_SHORT).show();
-                switchFragment(new CreateEventFragment(getThis()));
-                break;
             case R.id.action_addfriend:
                 Toast.makeText(this, "Add Friend!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_escape:
-                // Change fragment back to frivolous, right now just always to same spot
-                switchFragment(previousFragment);
-                break;
-            case R.id.action_save:
-                //Close your eyes
-                Event currentEvent = ((EventPageFragment)currentFragment).event;// hack
-                item.setChecked(!item.isChecked());
-                if (item.isChecked()) {
-                    item.setIcon(R.drawable.ic_star_filled);
-                    Toast.makeText(this, "Bookmarked Event!", Toast.LENGTH_SHORT).show();
-
-                    currentUser.bookMark(currentEvent);
-                    // save the event
-                } else {
-                    item.setIcon(R.drawable.ic_star_border);
-                    Toast.makeText(this, "Removed Bookmark.", Toast.LENGTH_SHORT).show();
-                    currentUser.removeBookMark(currentEvent);
-                    // remove the saved event
-                }
-                break;
-            case R.id.action_notifications:
-                // Change fragment back to frivolous, right now just always to same spot
-                switchFragment(new InvitesFragment(getThis()));
                 break;
         }
         return true;
@@ -353,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
     final public EventAdapter.OnEventClickListener CLICK_EVENT = new EventAdapter.OnEventClickListener() {
         @Override
         public void onItemClick(Event event) {
-            switchFragment(new EventPageFragment(getThis(), event));
+            changeFragment(new EventPageFragment(event));
         }
     };
 
