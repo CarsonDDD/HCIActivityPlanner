@@ -53,10 +53,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:visibility="gone"
                 android:text="@string/search_results"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_search_results"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -68,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:visibility="gone"
                 android:text="@string/no_search_results"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
