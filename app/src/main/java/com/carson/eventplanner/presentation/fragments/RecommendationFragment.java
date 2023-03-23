@@ -22,5 +22,6 @@ public class RecommendationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recommendation, container, false);
+        //((MainActivity)getActivity()).addHamburger(toolbar);
     }
 }

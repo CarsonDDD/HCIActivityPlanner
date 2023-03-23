@@ -20,19 +20,10 @@ import com.carson.eventplanner.presentation.adapters.FriendAdapter;
 
 public class FriendsFragment extends Fragment {
 
-    private RecyclerView rvFriends;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends, container, false);
     }
 
     // inflate toolbar with menu
@@ -42,11 +33,18 @@ public class FriendsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_friends, container, false);
+
         // Set up the event categories
-        rvFriends = view.findViewById(R.id.rv_friends);
+        RecyclerView rvFriends = view.findViewById(R.id.rv_friends);
         rvFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
         FriendAdapter eventInvitationAdapter = new FriendAdapter(((MainActivity)getActivity()).getActiveUser().getFriends());
         rvFriends.setAdapter(eventInvitationAdapter);
+
+        ((MainActivity)getActivity()).addHamburger(view.findViewById(R.id.toolbar));
+        return view;
     }
 }

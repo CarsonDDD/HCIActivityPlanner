@@ -32,6 +32,8 @@ public class BookmarksFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        ((MainActivity)getActivity()).addHamburger(view.findViewById(R.id.toolbar));
+
         // Organizers
         RecyclerView events = view.findViewById(R.id.rv_events);
         events.setLayoutManager(new LinearLayoutManager(getActivity()));

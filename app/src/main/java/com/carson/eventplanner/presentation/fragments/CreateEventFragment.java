@@ -93,6 +93,8 @@ public class CreateEventFragment extends Fragment {
             }
         });
 
+        ((MainActivity)getActivity()).addHamburger(toolbar);
+
         return view;
     }
 }

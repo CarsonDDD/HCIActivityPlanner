@@ -67,6 +67,8 @@ public class EventListFragment extends Fragment {
         List<Event> userJoinedEvents = ((MainActivity)getActivity()).getActiveUser().getJoinedEvents();
         EventAdapter joinedEventsAdapter = new EventAdapter(userJoinedEvents, R.layout.item_event_alt, ((MainActivity)getActivity()).CLICK_EVENT);
         rvJoinedEvents.setAdapter(joinedEventsAdapter);
+
+        ((MainActivity)getActivity()).addHamburger(view.findViewById(R.id.toolbar));
     }
 
 }

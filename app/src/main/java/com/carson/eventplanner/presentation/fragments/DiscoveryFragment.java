@@ -92,6 +92,8 @@ public class DiscoveryFragment extends Fragment {
             }
         });
 
+        ((MainActivity)getActivity()).addHamburger(toolbar);
+
         return view;
     }
 

@@ -139,6 +139,8 @@ public class EventPageFragment extends Fragment {
             }
         });
 
+        ((MainActivity)getActivity()).addHamburger(toolbar);
+
         return view;
     }
 }

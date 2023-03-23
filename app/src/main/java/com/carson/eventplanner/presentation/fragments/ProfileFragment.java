@@ -95,6 +95,8 @@ public class ProfileFragment extends Fragment {
                 return true;
             }
         });
+        ((MainActivity)getActivity()).addHamburger(toolbar);
+
 
 
         return view;

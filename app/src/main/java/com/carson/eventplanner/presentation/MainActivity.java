@@ -2,10 +2,14 @@ package com.carson.eventplanner.presentation;
 
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,6 +38,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    // The "database"
+    private User currentUser;
+    public User getActiveUser(){
+        return currentUser;
+    }
+    public List<Event> allEvents;
+
+    DrawerLayout drawerLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        setupData();
+
+        changeFragment(new DiscoveryFragment());
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        // set up Hamburger drawer. Icon changing should be done here too
+        RecyclerView rvDrawerMenu = findViewById(R.id.rv_drawer_menu);
+        rvDrawerMenu.setLayoutManager(new LinearLayoutManager(this));
+        List<String> drawerItems = new ArrayList<>();
+        drawerItems.add("Home");
+        drawerItems.add("Invites");
+        drawerItems.add("Friends");
+        drawerItems.add("Your Events");
+        drawerItems.add("Bookmarks");
+        drawerItems.add("Recommendations");
+        drawerItems.add("Calendar");
+        DrawerMenuAdapter drawerMenuAdapter = new DrawerMenuAdapter(drawerItems, menuClick);
+        rvDrawerMenu.setAdapter(drawerMenuAdapter);
+    }
+
     void setupData(){
         // Init user
         // Add all user hardcoded data here
@@ -160,48 +198,11 @@ public class MainActivity extends AppCompatActivity {
         allEvents.add(magic);
     }
 
-    // The "database"
-    private User currentUser;
-    public User getActiveUser(){
-        return currentUser;
-    }
-    public List<Event> allEvents;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        setupData();
-
-        changeFragment(new DiscoveryFragment());
-
-        BottomNavigationView navbar = findViewById(R.id.navigation_bar);
-        navbar.getMenu().findItem(R.id.menu_discovery).setChecked(true);
-
-        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_search:
-                        changeFragment(new SearchFragment());
-                        // Handle the "Home" item
-                        break;
-                    case R.id.menu_discovery:
-                        changeFragment(new DiscoveryFragment());
-                        break;
-                    case R.id.menu_profile:
-                        // Handle the "Profile" item
-                        changeFragment(new ProfileFragment(getActiveUser()));
-                        break;
-                }
-                // Set the item as checked to highlight it in the NavigationView
-                //item.setChecked(true);
-                return true;
-            }
-        });
-
-
+    public void addHamburger(Toolbar fragmentToolbar) {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, fragmentToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
     }
 
     // Public function to be used outside this class without needing to touch its caller
@@ -210,12 +211,16 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container,fragment)
                 .addToBackStack(null)
                 .commit();
+
+        if(drawerLayout != null){
+            drawerLayout.close();
+        }
     }
 
     public void undoFragment(){
         if(getSupportFragmentManager().getBackStackEntryCount() > 1){
             getSupportFragmentManager().popBackStack();
-            updateNavigationBar();
+            //updateNavigationBar();
         }
     }
 
@@ -226,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Make sure the navigation bar has the correct fragment checked
-    private void updateNavigationBar(){
+    /*private void updateNavigationBar(){
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         BottomNavigationView navbar = findViewById(R.id.navigation_bar);
 
@@ -246,18 +251,18 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(currentFragment instanceof ProfileViewFragment && ((ProfileViewFragment)currentFragment).isCurrentUser()){
             navbar.setSelectedItemId(R.id.nav_profile);
-        }*/
+        }
 
         // else.... nothing.
-    }
+    }*/
 
-    public void showNavigationBar(boolean showBar){
+    /*public void showNavigationBar(boolean showBar){
         BottomNavigationView nav = findViewById(R.id.navigation_bar);
         if(showBar)
             nav.setVisibility(View.VISIBLE);
         else
             nav.setVisibility(View.GONE);
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -270,6 +275,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Event Handlers
+    final private DrawerMenuAdapter.OnItemClickListener menuClick = new DrawerMenuAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(String id) {
+            switch (id.toLowerCase()){
+                case "home":
+                    changeFragment(new DiscoveryFragment());
+                    break;
+                case "invites":
+                    changeFragment(new InvitesFragment());
+                    break;
+                case "friends":
+                    changeFragment(new FriendsFragment());
+                    break;
+                case "your events":
+                    changeFragment(new EventListFragment());
+                    break;
+                case "bookmarks":
+                    changeFragment(new BookmarksFragment());
+                    break;
+                /*case "recommendations":
+                    switchFragment(new RecommendationFragment());
+                    break;
+                case "calendar":
+                    switchFragment(new CalendarFragment());
+                    break;*/
+            }
+
+        }
+    };
+
     final public EventAdapter.OnEventClickListener CLICK_EVENT = new EventAdapter.OnEventClickListener() {
         @Override
         public void onItemClick(Event event) {
