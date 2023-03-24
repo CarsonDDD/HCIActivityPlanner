@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +26,16 @@ import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
 import com.carson.eventplanner.presentation.adapters.EventCategoryAdapter;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiscoveryFragment extends Fragment {
+    RecyclerView rvFiltered;
+    TextView searchText;
+    TextView noResults;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +44,7 @@ public class DiscoveryFragment extends Fragment {
     // inflate toolbar with menu
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_home, menu);
+        inflater.inflate(R.menu.menu_add_event, menu);
     }
 
     @Override
@@ -46,6 +53,17 @@ public class DiscoveryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_discovery, container, false);
 
+
+
+        //Hide search content
+        rvFiltered = view.findViewById(R.id.rv_search_results);
+        rvFiltered.setVisibility(View.GONE);
+        searchText = view.findViewById(R.id.tv_search_results);
+        searchText.setVisibility(View.GONE);
+        noResults = view.findViewById(R.id.no_search_results);
+        noResults.setVisibility(View.GONE);
+        
+        
         // Set up the event categories
         RecyclerView rvCategories = view.findViewById(R.id.rv_event_categories);
         List<EventCategory> eventCategories = new ArrayList<>();
@@ -87,12 +105,64 @@ public class DiscoveryFragment extends Fragment {
                     case R.id.action_notifications:
                         Toast.makeText(getContext(), "Notifications", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.action_addevent:
+                        Toast.makeText(getContext(), "Add Event!", Toast.LENGTH_SHORT).show();
+                        ((MainActivity)getActivity()).changeFragment(new CreateEventFragment());
+                        break;
                 }
                 return true;
             }
         });
 
         ((MainActivity)getActivity()).addHamburger(toolbar);
+
+        SearchView searchView = view.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            //rvFiltered = view.findViewById(R.id.rv_search_results);
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                //rvFiltered.setVisibility(View.VISIBLE);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                List<Event> filtered = new ArrayList<Event>();
+
+                if(!newText.equals("")) {
+                    rvFiltered.setVisibility(View.VISIBLE);
+                    searchText.setVisibility(View.VISIBLE);
+
+                    for (Event event : ((MainActivity)getActivity()).allEvents) {
+                        if (event.getTitle().toLowerCase().contains(newText)) {
+                            filtered.add(event);
+                        }
+                    }
+
+                    EventAdapter filteredEvents = new EventAdapter(filtered, R.layout.item_event, ((MainActivity)getActivity()).CLICK_EVENT);
+                    rvFiltered.setAdapter(filteredEvents);
+
+                    if(filtered.size() != 0) {
+                        noResults.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        noResults.setVisibility(View.VISIBLE);
+                    }
+                }
+                else
+                {
+                    rvFiltered.setVisibility(View.GONE);
+                    searchText.setVisibility(View.GONE);
+                    noResults.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+        });
 
         return view;
     }

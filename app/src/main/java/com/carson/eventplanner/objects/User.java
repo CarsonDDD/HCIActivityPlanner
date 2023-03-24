@@ -10,7 +10,7 @@ public class User {
     private List<User> friends;
     private List<Event> createdEvents;
     private List<Event> joinedEvents;
-    private List<Event> invitations;
+    private List<Invite> invitations;
     private List<Event> bookMarks;
 
     public User(String userName) {
@@ -18,7 +18,7 @@ public class User {
         friends = new ArrayList<User>();
         createdEvents = new ArrayList<Event>();
         joinedEvents = new ArrayList<Event>();
-        invitations = new ArrayList<Event>();
+        invitations = new ArrayList<Invite>();
         bookMarks = new ArrayList<>();
     }
 
@@ -43,7 +43,7 @@ public class User {
         return joinedEvents;
     }
 
-    public List<Event> getInvitations(){
+    public List<Invite> getInvitations(){
         return invitations;
     }
 
@@ -78,6 +78,10 @@ public class User {
 
     public List<Event> getBookMarks() {
         return bookMarks;
+    }
+
+    public void invite(Event darts, User user) {
+        user.invitations.add(new Invite(darts, this));
     }
     /*public int getProfileImage() {
         return 0;

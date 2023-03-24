@@ -109,6 +109,7 @@ public class EventPageFragment extends Fragment {
 
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitle(event.getTitle());
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

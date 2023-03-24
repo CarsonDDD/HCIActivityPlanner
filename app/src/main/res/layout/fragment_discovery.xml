@@ -17,7 +17,18 @@
         android:background="@color/primary"
         app:title="Home"
         app:contentInsetStart="0dp"
-        app:menu="@menu/menu_home">
+        app:menu="@menu/menu_add_event">
+
+        <!-- Search bar -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="-20dp"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_hint" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -38,12 +49,14 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/event_categories"
+                android:visibility="gone"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_event_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 tools:listitem="@layout/item_event_category"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_event_categories" />
@@ -54,12 +67,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:visibility="gone"
                 android:text="@string/search_results"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_search_results"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

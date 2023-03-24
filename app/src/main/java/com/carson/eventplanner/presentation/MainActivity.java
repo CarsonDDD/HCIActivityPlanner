@@ -62,12 +62,13 @@ public class MainActivity extends AppCompatActivity {
         rvDrawerMenu.setLayoutManager(new LinearLayoutManager(this));
         List<String> drawerItems = new ArrayList<>();
         drawerItems.add("Home");
+        drawerItems.add("Profile");
         drawerItems.add("Invites");
         drawerItems.add("Friends");
         drawerItems.add("Your Events");
         drawerItems.add("Bookmarks");
-        drawerItems.add("Recommendations");
-        drawerItems.add("Calendar");
+        //drawerItems.add("Recommendations");
+        //drawerItems.add("Calendar");
         DrawerMenuAdapter drawerMenuAdapter = new DrawerMenuAdapter(drawerItems, menuClick);
         rvDrawerMenu.setAdapter(drawerMenuAdapter);
     }
@@ -196,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
         allEvents.add(joke);
         allEvents.add(sky);
         allEvents.add(magic);
+
+
+        // Invite test
+        carson.invite(darts, getActiveUser());
     }
 
     public void addHamburger(Toolbar fragmentToolbar) {
@@ -281,6 +286,9 @@ public class MainActivity extends AppCompatActivity {
             switch (id.toLowerCase()){
                 case "home":
                     changeFragment(new DiscoveryFragment());
+                    break;
+                case "profile":
+                    changeFragment(new ProfileFragment(getActiveUser()));
                     break;
                 case "invites":
                     changeFragment(new InvitesFragment());
