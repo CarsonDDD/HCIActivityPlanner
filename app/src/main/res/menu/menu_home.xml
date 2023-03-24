@@ -7,4 +7,11 @@
         android:icon="@drawable/ic_notifications"
         app:showAsAction="always"
         android:title="CLOSE"/>
+
+    <item
+        android:id="@+id/action_addevent"
+        android:icon="@drawable/ic_add"
+        android:title="add event"
+        android:checkable="true"
+        app:showAsAction="always" />
 </menu>

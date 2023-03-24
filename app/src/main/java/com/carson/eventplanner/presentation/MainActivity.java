@@ -158,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
         allEvents.add(joke);
         allEvents.add(sky);
         allEvents.add(magic);
+
+        // Invite test
+        carson.invite(darts, getActiveUser());
     }
 
     // The "database"

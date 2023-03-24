@@ -86,6 +86,12 @@ public class DiscoveryFragment extends Fragment {
                 switch (item.getItemId()){
                     case R.id.action_notifications:
                         Toast.makeText(getContext(), "Notifications", Toast.LENGTH_SHORT).show();
+                        ((MainActivity)getActivity()).changeFragment(new InvitesFragment());
+
+                        break;
+                    case R.id.action_addevent:
+                        Toast.makeText(getContext(), "Add Event!", Toast.LENGTH_SHORT).show();
+                        ((MainActivity)getActivity()).changeFragment(new CreateEventFragment());
                         break;
                 }
                 return true;

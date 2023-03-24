@@ -35,12 +35,14 @@
                 android:id="@+id/tv_event_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:padding="8dp"
                 android:text="@string/event_categories"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_event_categories"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:listitem="@layout/item_event_category"

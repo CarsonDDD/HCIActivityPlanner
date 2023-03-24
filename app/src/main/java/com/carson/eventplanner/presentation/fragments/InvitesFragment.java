@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 
 import com.carson.eventplanner.R;
 import com.carson.eventplanner.objects.Event;
+import com.carson.eventplanner.objects.Invite;
 import com.carson.eventplanner.presentation.MainActivity;
 import com.carson.eventplanner.presentation.adapters.EventAdapter;
+import com.carson.eventplanner.presentation.adapters.InviteAdapter;
 
 import java.util.List;
 
@@ -47,8 +49,15 @@ public class InvitesFragment extends Fragment {
         RecyclerView rvInvites = view.findViewById(R.id.rv_invites);
         rvInvites.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<Event> userInvites = ((MainActivity)getActivity()).getActiveUser().getInvitations();
-        EventAdapter eventAdapter = new EventAdapter(userInvites, R.layout.item_invite, ((MainActivity)getActivity()).CLICK_EVENT);
+        List<Invite> userInvites = ((MainActivity)getActivity()).getActiveUser().getInvitations();
+        InviteAdapter eventAdapter = new InviteAdapter(userInvites, CLICK_EVENT);
         rvInvites.setAdapter(eventAdapter);
     }
+
+    final public InviteAdapter.OnEventClickListener CLICK_EVENT = new InviteAdapter.OnEventClickListener() {
+        @Override
+        public void onItemClick(Invite invite) {
+            ((MainActivity)getActivity()).changeFragment(new EventPageFragment(invite.getEvent()));
+        }
+    };
 }
